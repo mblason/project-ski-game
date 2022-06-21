@@ -1,8 +1,8 @@
 class Player {
     constructor(ctx){
         this.ctx = ctx;
-        this.x = 800; // this.ctx.canvas.width / 2
-        this.y = 300; // this.ctx.canvas.heigth / 3
+        this.x = this.ctx.canvas.width / 2;
+        this.y = this.ctx.canvas.height / 3;
         this.w = 61;
         this.h = 99;
         this.img = new Image();
@@ -13,11 +13,6 @@ class Player {
             a: false,
             Enter: false,
         }
-
-        this.vx = 0;
-        this.vy = 0;
-        this.g = 1;
-
 
         this.setListenners();
     }
@@ -34,9 +29,6 @@ class Player {
 
     move() {
         this.applyActions();
-        this.x += this.vx;
-        this.y += this.vy;
-        this.vy += this.g;
     }
 
     setListenners() {
@@ -46,36 +38,21 @@ class Player {
 
     switchActions(key, bool) {
         this.actions[key] = bool
-        console.log(key)
     }
 
     applyActions() {
         if (this.actions.d) {
-            this.vx = 2
+            // la imagen tiene que cambiar hacia la derecha
         }
 
         if (this.actions.a) {
-            this.vx = -2
+            // la imagen tiene que cambiar hacia la izquierda
         }
 
         if (this.actions.Enter) {
-            this.vy = -20
+            this.vy = -10
+            // la imagen tiene que cambiar al frame jumping
         }
     }
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
