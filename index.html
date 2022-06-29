@@ -5,19 +5,89 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-    <title>Skier's revenge</title>
+    <title>SKIER'S REVENGE</title>
 </head>
 
 <body>
-    <canvas id="canvas" width="1400" height="800">
+    <canvas id="canvas" width="1400" height="800"></canvas>
 
+    <div id="main-container">
+        <div id="buttons-container">      
+            <button id="commands-btn">COMMANDS</button>
+            <button id="reset-btn">RESET</button>            
+            <button id="pause-btn">PAUSE</button>
+        </div>
+
+        <div id="metrics-container">        
+            <div id="lifes-container">
+                <span class="text-span">LIFES:</span>
+                <div class="hearts-container">
+                    <img class="life" src="/Images/Home/Life_heart.png" alt="heart">
+                    <img class="life" src="/Images/Home/Life_heart.png" alt="heart">
+                    <img class="life" src="/Images/Home/Life_heart.png" alt="heart">
+                    <img class="life" src="/Images/Home/Life_heart.png" alt="heart">
+                </div>
+            </div>
+
+            <div id="yetis-killed-container">                  
+                    <span>YETIS KILLED:</span>
+                    <span class="count-yetis-killed"></span>
+                    <img src="/Images/Home/RIP_yetis.png">  
+            </div>
+
+            <div id="distance-container">      
+                    <span>DISTANCE:</span>
+                    <span class="current-distance"></span>
+                    <span>m</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="commands-container" class="invisible">
+        <img src="/Images/Home/Commands_0.png" alt="commands">
+        <br>
+        <br>
+        <button id="close-commands-btn">CLOSE</button>
+    </div>
+
+    <div id="home-background">
+        <img src="Images/Home/Name_game.png" alt="game logo">
+        <div id="buttons-home-container">      
+            <button id="instructions-btn">HOW TO PLAY</button>
+            <button id="play-btn">LET'S PLAY</button>
+        </div>
+    </div>
+
+    <div id="instructions-container" class="invisible">
+        <div id="instructions"> 
+            <h2>ARE YOU READY TO FINALLY TAKE REVENGE ON THE YETIS?</h2>   
+            <br>         
+            <br>  
+            <ul>
+                <li>Avoid the obstacles, otherwise they will take lives away from you.</li>
+                <li>If any yeti appear, throw snowballs at them to knock them down.</li>
+                <li>The yeti will die if you throw a snowballs at it.</li>
+                <li>But watch out! If the yeti manages to reach you... it will eat you!</li>
+            </ul>
+            <br>
+            <br>
+            <img src="/Images/Home/Commands_0.png" alt="commands">
+            <br>
+            <br>
+            <button id="close-instructions-btn">CLOSE</button>
+        </div>    
+    </div>
+    
+    <script src="/JS/background-snow.js"></script>
     <script src="/JS/snowball.js"></script>
     <script src="/JS/obstacle.js"></script>
     <script src="/JS/dog-animation.js"></script>
     <script src="/JS/snowboard-animation.js"></script>
     <script src="/JS/home.js"></script>
+    <script src="/JS/enemy.js"></script>
     <script src="/JS/player.js"></script>    
     <script src="/JS/game.js"></script>
     <script src="/JS/script.js"></script>    
 </body>
+
 </html>

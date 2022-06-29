@@ -1,24 +1,21 @@
 class Obstacle {
     constructor(ctx, type, game) {
         this.ctx = ctx;
+        this.type = type;   
         this.game = game;
+        this.collided = false;
 
         this.maxX = this.ctx.canvas.width + 100;
         this.minX = -100;         
         this.randomX = Math.floor(Math.random() * (this.maxX - this.minX)) + this.minX; 
-       
-        
+               
         this.maxY = this.ctx.canvas.height + 100;
         this.minY = this.ctx.canvas.height;
-        this.randomY = Math.floor(Math.random() * ((this.maxY) - this.minY)) + this.minY;
-
-        this.type = type;
-       
+        this.randomY = Math.floor(Math.random() * (this.maxY - this.minY)) + this.minY;        
 
         this.types = { 
             // key: [url img, width, height, x, y]
-            snowdrift: ['/Images/Frequent Obstacles/Snow_mountain.png', 118, 67, this.randomX, this.randomY], 
-            snow: ['/Images/Frequent Obstacles/Snow.png', 66, 44, this.randomX, this.randomY],
+            
             tree: ['/Images/Frequent Obstacles/Tree.png', 48, 60, this.randomX, this.randomY],
             dryTree: ['/Images/Frequent Obstacles/Dry_tree.png', 40, 48, this.randomX, this.randomY],
             cutTree: ['/Images/Frequent Obstacles/Cut_tree.png', 32, 24, this.randomX, this.randomY],
@@ -27,7 +24,7 @@ class Obstacle {
             chairliftEmpty: ['/Images/Frequent Obstacles/Chairlift_empty.png', 50, 55, this.ctx.canvas.width * 0.10, this.maxY],
             chairliftFull: ['/Images/Frequent Obstacles/Chairlift_full.png', 50, 57, this.ctx.canvas.width * 0.20, this.maxY - 100],
             car: ['/Images/Not Frequent Obstacles/Car.png', 47, 108, this.ctx.canvas.width * 0.75, this.maxY],
-            rainbow: ['/Images/Not Frequent Obstacles/Rainbow.png', 58, 19, this.randomX, this.randomY]                    
+            rainbowRamp: ['/Images/Not Frequent Obstacles/Rainbow.png', 58, 19, this.randomX, this.randomY]                    
         }
 
         this.img = new Image();
@@ -58,9 +55,10 @@ class Obstacle {
     }
     
     collide(el) {
-        const collideX = el.x + el.w > this.x && el.x < this.x + this.w;
-        const collideY = el.y < this.y + this.h && el.y + el.h > this.y;
+        const treshold = 10;
+        const collideX = el.x + el.w - treshold > this.x && el.x + treshold < this.x + this.w;
+        const collideY = el.y + treshold < this.y + this.h && el.y + el.h > this.y;
 
-        return collideX && collideY;
+        return el.invencible  ? false : collideX && collideY;
     }
 }
