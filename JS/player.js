@@ -26,10 +26,10 @@ class Player {
         this.tickSnowballs = 0;
         this.isReloading = false;
         this.snowballsCounter = 0;
-        this.direction = false;
     }
 
-    draw() {        
+    draw() {       
+        this.clearSnowballs(); 
         //(img, sx, sy, swidth, sheight, x, y, width, height)        
         
         this.ctx.drawImage(
@@ -50,40 +50,32 @@ class Player {
 
     move() {     
         this.y += this.vy;
-        this.snowballs.forEach(ball => {
-            if(!ball.snowballShooted){
-                ball.snowballShooted = true;
-                ball.move()}
-        } );
+
+        this.snowballs.forEach(ball => ball.move());
         
         // DOWN
         if (this.game.vy == -4) {
             this.img.frameIndex = 0;   
-            this.direction = 'down';         
         }
 
         // KINDA LEFT
         if (this.game.vx == 3){
             this.img.frameIndex = 1; 
-            this.direction = 'kindaLeft';
         }
 
         // LEFT
         if (this.game.vy == -3 && this.game.vx == 4 ){
             this.img.frameIndex = 2; 
-            this.direction = 'left';
         }
  
         // KINDA RIGHT
         else if (this.game.vx == -3){
             this.img.frameIndex = 3; 
-            this.direction = 'kindaRight';
         }
 
         // RIGHT
         if (this.game.vy == -3 && this.game.vx == -4 ){
             this.img.frameIndex = 4; 
-            this.direction = 'right';
         }
 
         // JUMP
@@ -91,7 +83,6 @@ class Player {
             this.isJumping = true;
             this.vy = -7;            
             this.img.frameIndex = 5;
-            this.direction = false;
         }
 
         if (this.isJumping){            
@@ -108,13 +99,11 @@ class Player {
         if (this.game.hitObstacle){
             this.img.frameIndex = 6;
             this.game.hitObstacle = false;
-            this.direction = false;
         }                
         
         // RAMP JUMP
         if (this.game.vy == -8){
             this.img.frameIndex = 5;
-            this.direction = false;
         }
     }
 
@@ -125,7 +114,7 @@ class Player {
             this.tickSnowballs = 0;
             this.clearSnowballs();
 
-            if(!this.isReloading) {        
+            if (!this.isReloading) {        
                 this.snowballs.push(new Snowball(this, this.x + this.w / 2, this.y + this.h));
                 this.snowballsCounter++;
             }        
@@ -136,7 +125,7 @@ class Player {
             this.snowballsCounter = 0;
             setTimeout(() => {
                 this.isReloading = false;
-            }, 1000)
+            }, 500)
         }  
     }
 

@@ -29,6 +29,61 @@ body {
     display: block;
 }
 
+#game-over-container {
+    position: absolute;
+    z-index: 1;
+    top: 30%;
+    left: 30%;
+    height: 350px;
+    width: 500px;
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 25px;
+    background-color: whitesmoke;
+    color: black;
+    
+}
+
+#game-over-container h2 {
+    font-size: 4rem; 
+    text-align: center;
+}
+
+#game-over-container #columns-score {
+    margin-top: 10%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+    position: relative;
+}
+
+#game-over-container #columns-score div > h3 {    
+    text-decoration: underline;
+    margin-bottom: 10%;
+}
+
+#game-over-container #columns-score div > span {
+    line-height: 1.5;
+}
+
+#game-over-container #columns-score div > img {
+    height: 15px;
+}
+
+#game-over-container #play-again-btn {
+    position: absolute;  
+    right: 38%;  
+    bottom: 10%;
+    width: 120px;
+    height: 40px;
+    border-radius: 3px;
+    border: 3px solid whitesmoke;
+    color: whitesmoke;
+    background-color: black;
+    font-size: 1.2rem;
+}
+
 #main-container {    
     position: absolute;
     z-index: 1;
@@ -55,7 +110,7 @@ body {
 
 #metrics-container {
     height: 45px;
-    width: 900px;
+    width: 600px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -70,7 +125,7 @@ body {
 }
 
 #metrics-container #lifes-container .hearts-container img {
-    height: 30px;
+    height: 25px;
     margin-bottom: 10px;
     margin-left: 5px;
 }
@@ -87,7 +142,7 @@ body {
 }
 
 #metrics-container #yetis-killed-container img {
-    height: 31px;
+    height: 30px;
     margin-bottom: 11px;
     margin-left: 5px;
 }

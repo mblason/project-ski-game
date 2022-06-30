@@ -30,15 +30,15 @@
             </div>
 
             <div id="yetis-killed-container">                  
-                    <span>YETIS KILLED:</span>
-                    <span class="count-yetis-killed"></span>
-                    <img src="/Images/Home/RIP_yetis.png">  
+                <span>YETIS KILLED:</span>
+                <span class="count-yetis-killed"></span>
+                <img src="/Images/Home/RIP_yetis.png">  
             </div>
 
             <div id="distance-container">      
-                    <span>DISTANCE:</span>
-                    <span class="current-distance"></span>
-                    <span>m</span>
+                <span>DISTANCE:</span>
+                <span class="current-distance"></span>
+                <span>m</span>
             </div>
         </div>
     </div>
@@ -76,6 +76,39 @@
             <br>
             <button id="close-instructions-btn">CLOSE</button>
         </div>    
+    </div>
+
+    <div id="game-over-container" class="invisible">
+        <h2>GAME OVER</h2>
+        <div id="columns-score">
+            <div id="current-score">
+                <h3>YOUR SCORE:</h3>   
+                <div>     
+                    <span class="final-yetis-killed"></span>             
+                    <span>YETIS KILLED</span>                    
+                    <img src="/Images/Home/RIP_yetis.png">  
+                </div>
+                <div>
+                    <span class="final-distance"></span>
+                    <span>m</span>
+                    <span>DISTANCE TRAVELED</span>        
+                </div>            
+            </div>
+            <div id="best-score">
+                <h3>BEST SCORE:</h3>   
+                <div>       
+                    <span class="best-yetis-killed"></span>           
+                    <span>YETIS KILLED</span>                    
+                    <img src="/Images/Home/RIP_yetis.png">  
+                </div>
+                <div>
+                    <span class="best-distance"></span>
+                    <span>m</span>
+                    <span>DISTANCE TRAVELED</span>                   
+                </div>
+            </div>
+        </div>
+        <button id="play-again-btn">PLAY AGAIN</button>      
     </div>
     
     <script src="/JS/background-snow.js"></script>

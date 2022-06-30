@@ -59,3 +59,10 @@ pauseBtn.addEventListener('click', () => {
       pauseBtn.textContent = "PAUSE";
     }
 });
+
+// UBICO Y AGREGO LISTENNER AL BTN PLAY AGAIN
+const playAgainBtn = document.getElementById('play-again-btn');
+
+playAgainBtn.addEventListener('click', () => {
+  window.location.reload()
+})

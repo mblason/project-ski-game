@@ -51,7 +51,7 @@ class Obstacle {
     }
         
     isVisible() {
-        return this.y <= this.ctx.canvas.height;
+        return (this.y <= this.ctx.canvas.height && this.y >= 0) && (this.x <= this.ctx.canvas.width && this.x >= 0);
     }
     
     collide(el) {
@@ -59,6 +59,6 @@ class Obstacle {
         const collideX = el.x + el.w - treshold > this.x && el.x + treshold < this.x + this.w;
         const collideY = el.y + treshold < this.y + this.h && el.y + el.h > this.y;
 
-        return el.invencible  ? false : collideX && collideY;
+        return el.invencible ? false : collideX && collideY;
     }
 }

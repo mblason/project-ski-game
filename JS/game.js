@@ -7,13 +7,17 @@ class Game {
         this.tickBackground = 0;
 
         this.player = new Player(this.ctx, this);
+        this.hitObstacle = false;
 
         this.tickDistance = 0;
         this.distance = 0;
 
         this.enemies = [];
         this.deadYetis = 0;
-        this.killedYeti = false;
+        this.minTime = 500;//180000; // 3 min en milisegundos
+        this.maxTime = 2000;//300000; // 5 min en milisegundos
+        this.randomAppearEnemy = Math.floor(Math.random() * (this.maxTime - this.minTime)) + this.minTime;
+        this.tickAppearEnemy = 0; 
 
         this.distance = 0;
         this.speed = 0;
@@ -21,9 +25,7 @@ class Game {
         this.frequentObs = [];
         this.notFrequentObs = [];
         this.tickFreqObs = 0;
-        this.tickNotFreqObs = 0;
-
-        this.hitObstacle = false;
+        this.tickNotFreqObs = 0;       
 
         this.dog = [];
         this.snowboard = [];       
@@ -49,13 +51,6 @@ class Game {
         this.vy = 0;
         this.vx = 0;
 
-        this.enemyLeft = false;
-
-        this.minTime = 500;//180000; // 3 min en milisegundos
-        this.maxTime = 2000;//300000; // 5 min en milisegundos
-        this.randomAppearEnemy = Math.floor(Math.random() * (this.maxTime - this.minTime)) + this.minTime;
-        this.tickAppearEnemy = 0; 
-
         this.addHomeElements();
         this.setListenners();
     }
@@ -75,8 +70,6 @@ class Game {
             this.tickSnowboard++;
             this.tickAppearEnemy++;   
                          
-            const deadYetiContainer = document.querySelector('.count-yetis-killed');
-            deadYetiContainer.textContent = this.deadYetis;
 
             if(this.vy !== 0){
                 this.tickDistance++; 
@@ -120,10 +113,15 @@ class Game {
                 this.addSnowboard();
             }
 
-            if (this.tickAppearEnemy == this.randomAppearEnemy){
+            if (this.tickAppearEnemy == 300){ // this.randomAppearEnemy
                 this.tickAppearEnemy = 0;
-                this.addEnemy(); 
+                this.addEnemy();
             }
+
+            if (this.tickAppearEnemy == 500){
+                this.clearEnemies();
+            }
+            
         }, 1000 / 60)
 
     }
@@ -161,12 +159,16 @@ class Game {
         this.snowboard = this.snowboard.filter(snowb => snowb.isVisible());
     }
 
+    clearEnemies() {
+        this.enemies = this.enemies.filter(enemy => enemy.isVisible());
+    }
+
     draw() {       
-        this.player.draw();   
-        this.home.forEach(el => el.draw());      
         this.backgrounds.forEach(snow => snow.draw());
         this.frequentObs.forEach(obs => obs.draw());
         this.notFrequentObs.forEach(obs => obs.draw());
+        this.player.draw();   
+        this.home.forEach(el => el.draw());          
         this.dog.forEach(dog => dog.draw());
         this.snowboard.forEach(snowb => snowb.draw());        
         this.enemies.forEach(enemy => enemy.draw());    
@@ -224,8 +226,8 @@ class Game {
     }
 
     addEnemy() {
-        this.enemies.push(new Enemy(this.ctx, this))
-        this.enemyLeft = !this.enemyLeft
+        const left = Math.random() > 0.5
+        this.enemies.push(new Enemy(this.ctx, this, left))
     }
 
     move() {        
@@ -298,17 +300,14 @@ class Game {
     
     checkCollisions() {
         const lifes = document.querySelectorAll('.life');
-		const lifesLength = lifes.length;
-        const heartsContainer = document.getElementsByClassName('hearts-container');
-        
+		const lifesLength = lifes.length;       
 
         this.frequentObs.forEach(obs => {
 
             if (obs.collide(this.player) && !obs.collided) {
                 obs.collided = true;
 
-                if (obs.type === 'rainbowRamp'){
-     
+                if (obs.type === 'rainbowRamp'){     
                     this.player.invencible = true
                     this.vy = -8;
 
@@ -318,11 +317,11 @@ class Game {
                     }, 2000)
                 }  
                 
-                if (obs.type !== 'rainbowRamp') {
+                if (obs.type !== 'rainbowRamp' && !this.player.isJumping) {               
                     this.vy = 0;
                     this.vx = 0;
                     this.hitObstacle = true;
-                    lifes[lifes.length - 1].remove();
+                    lifes[lifesLength - 1].remove();
                     this.player.playerReceiveDamage(1);
 
                     if (this.player.health < 1) {
@@ -332,7 +331,14 @@ class Game {
                                this.vy = -4;
                             }, 200)
                     }
-                }               
+                }       
+                
+                if (this.player.isJumping && (obs.type === 'cutTree' || obs.type === 'rock')){
+                        this.player.invencible = true;
+                        setTimeout(() => {
+                            this.player.invencible = false;
+                        }, 100)
+                    }
             }
         })
     
@@ -357,7 +363,7 @@ class Game {
                         this.vy = 0;
                         this.vx = 0;
                         this.hitObstacle = true;
-                        lifes[lifes.length - 1].remove();
+                        lifes[lifesLength - 1].remove();
                         this.player.playerReceiveDamage(1);
 
                         if (this.player.health < 1) {
@@ -372,27 +378,41 @@ class Game {
             } 
         })
 
-        this.enemies.forEach(enemy => {
+        this.enemies.forEach((enemy) => {
 
-            if (enemy.collide(this.player)){   
-                /*while (lifes.length > 0) {
-                    lifes[lifesLength -1].remove()
+            if (enemy.collide(this.player)){
+
+                if(!enemy.isDead){                
+                    this.player.playerReceiveDamage(4);
+                    let lifes = document.querySelectorAll('.life');
+                    lifes.forEach(heart => heart.remove());                 
+                    this.gameOver();
+                } 
+                
+                if(this.isDead){
+                    this.player.invencible = true;
+                    setTimeout(() => {
+                        this.player.invencible = false;
+                    }, 100)
                 }
-                */
-                this.player.playerReceiveDamage(4);
-                this.gameOver();
-            }        
+            }
 
             this.player.snowballs.forEach((snowball, index) => {
     
                 if (enemy.collide(snowball) && !snowball.collided) {
                     snowball.collided = true;
                     this.player.snowballs.splice(index, 1);
-                    enemy.enemyReceiveDamage(1);         
-                    this.killedYeti = true;                        
-                    this.deadYetis ++;
+                    
+
+                    if (snowball.collided === true && !enemy.isDead) {
+                        enemy.enemyReceiveDamage(1);
+                        enemy.isDead = true;
+                        this.deadYetis++;
+                        const deadYetiContainer = document.querySelector('.count-yetis-killed');
+                        deadYetiContainer.textContent = this.deadYetis;
+                    }         
                 }
-            })
+            })                      
         })
     }
  
@@ -400,10 +420,19 @@ class Game {
         clearInterval(this.intervalId);
         this.intervalId = null;
 
-        this.ctx.font = "30px Arial";
-        this.ctx.fillStyle = "red";
-        this.ctx.textAlign = "center";
-        this.ctx.fillText("GAME OVER", this.ctx.canvas.width/2, this.ctx.canvas.height/2);        
+        //UBICO Y HAGO VISIBLE EL GAME OVER CONTAINER
+        const gameOverContainer = document.getElementById('game-over-container');
+        gameOverContainer.classList.remove('invisible');
+
+        //UBICO E IMPRIMO LOS SCORES FINALES
+        const finalYetisKilled = document.querySelector('.final-yetis-killed');
+        finalYetisKilled.textContent = this.deadYetis;
+
+        const finalDistanceTraveled = document.querySelector('.final-distance');
+        finalDistanceTraveled.textContent = this.distance;
+
+        //UBICO E IMPRIMO LOS BEST SCORES - TO DO 
+
     }
 
     stop() {
@@ -411,3 +440,4 @@ class Game {
         this.intervalId = null;
     }
 }
+
