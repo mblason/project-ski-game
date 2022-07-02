@@ -60,7 +60,8 @@ body {
 
 #game-over-container #columns-score div > h3 {    
     text-decoration: underline;
-    margin-bottom: 10%;
+    height: 20px;
+    margin-bottom: 10%;    
 }
 
 #game-over-container #columns-score div > span {
@@ -69,6 +70,25 @@ body {
 
 #game-over-container #columns-score div > img {
     height: 15px;
+}
+
+#game-over-container #best-score {
+    position: relative;
+}
+
+#game-over-container #name-user{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+}
+
+#game-over-container #name-user .span-name-input{
+    position: absolute;
+    top: 0%;
+    right: 15%;
+    text-align: center;
+    height: 20px;
+    
 }
 
 #game-over-container #play-again-btn {

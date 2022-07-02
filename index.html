@@ -10,7 +10,6 @@
 
   <body>
     <canvas id="canvas" width="1400" height="800"></canvas>
-
     <div id="main-container">
       <div id="buttons-container">
         <button id="commands-btn">COMMANDS</button>
@@ -90,23 +89,24 @@
     </div>
 
     <div id="choose-level-container" class="invisible">
-      <!-- <div class="input-container">
+        
+        <div class="input-container">
             <h2>ENTER YOUR NAME:</h2>            
-            <input type="text"></input>
-        </div> -->
-      <h2>CHOOSE THE DIFFICULTY:</h2>
-      <div class="level-btn-container">
+            <input id="input" type="text" required></input>
+        </div> 
+        <h2>CHOOSE THE DIFFICULTY:</h2>
+        <div class="level-btn-container">
         <div>
-          <button id="easy-diff-btn">EASY</button>
-          <small>I’VE NEVER KILLED A YETI BEFORE</small>
+            <button id="easy-diff-btn">EASY</button>
+            <small>I’VE NEVER KILLED A YETI BEFORE</small>
         </div>
         <div>
-          <button id="normal-diff-btn">NORMAL</button>
-          <small>I USED TO KILL SOME YETIS</small>
+            <button id="normal-diff-btn">NORMAL</button>
+            <small>I USED TO KILL SOME YETIS</small>
         </div>
         <div>
-          <button id="hard-diff-btn">HARD</button>
-          <small>KILL YETIS = PIECE OF CAKE</small>
+            <button id="hard-diff-btn">HARD</button>
+            <small>KILL YETIS = PIECE OF CAKE</small>
         </div>
       </div>
     </div>
@@ -128,17 +128,20 @@
           </div>
         </div>
         <div id="best-score">
-          <h3>BEST SCORE:</h3>
-          <div>
-            <span class="best-yetis-killed"></span>
-            <span>YETIS KILLED</span>
-            <img src="/Images/Home/RIP_yetis.png" />
-          </div>
-          <div>
-            <span class="best-distance"></span>
-            <span>m</span>
-            <span>DISTANCE TRAVELED</span>
-          </div>
+            <div id="name-user">
+                <h3>BEST SCORE BY:</h3>                
+                <span class="span-name-input"></span>
+            </div> 
+            <div>
+                <span class="best-yetis-killed"></span>
+                <span>YETIS KILLED</span>
+                <img src="/Images/Home/RIP_yetis.png" />
+            </div>
+            <div>
+                <span class="best-distance"></span>
+                <span>m</span>
+                <span>DISTANCE TRAVELED</span>
+            </div>
         </div>
       </div>
       <button id="play-again-btn">PLAY AGAIN</button>

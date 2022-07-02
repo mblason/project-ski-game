@@ -95,7 +95,6 @@ class Enemy {
         // el yeti aparecer Random en diagonal desde el extremo inferior derecho o izquierdo 
         // el yeti debe llegar hasta la posición del player 
         //MOVER AL YETI
-
         this.y += this.vy 
         this.x += this.vx; 
 

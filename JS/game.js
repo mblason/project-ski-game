@@ -2,7 +2,9 @@ class Game {
     constructor(ctx) {
         this.ctx = ctx;        
         this.home = [];
-
+        this.homeSound = new Audio();
+        this.homeSound.src = '/Sounds/home-sound.mp3';
+        this.homeSound.autoplay = true;
         this.diffIndex = 0;
         this.difficulties = [
             { // RESTO 1 EN VELOCIDAD        
@@ -45,6 +47,8 @@ class Game {
 
         this.scoreDistanceStr = localStorage.getItem(SAVE_KEY_DISTANCE_SCORE);
         this.highScoreDistance = this.scoreDistanceStr == null ? 0 : parseInt(this.scoreDistanceStr);
+
+        this.userName = localStorage.getItem(SAVE_KEY_USER_NAME);
 
         this.tickDistance = 0;
         this.distance = 0;    
@@ -315,12 +319,12 @@ class Game {
         }
 
         // KINDA LEFT
-        if (this.actions.ArrowLeft && this.vy !==0) {
+        if (this.actions.ArrowLeft && this.vy !== 0) {
             this.vx = this.difficulties[this.diffIndex].vxKindaLeft;            
         }
                 
         // LEFT       
-        if (this.actions.ArrowLeft  && this.actions.ArrowUp && this.vy !==0) {  
+        if (this.actions.ArrowLeft  && this.actions.ArrowUp && this.vy !== 0) {  
             this.vy = this.difficulties[this.diffIndex].vyLeft;
             this.vx = this.difficulties[this.diffIndex].vxLeft;            
         }
@@ -342,7 +346,7 @@ class Game {
         }         
 
         // SHOOT
-        if (this.actions.Space && !this.hitRamp){
+        if (this.actions.Space && !this.hitRamp && !this.actions.ControlLeft){
             this.player.shoot();
         }
     }
@@ -517,29 +521,37 @@ class Game {
         const finalDistanceTraveled = document.querySelector('.final-distance');
         finalDistanceTraveled.textContent = this.distance;
 
-        //UBICO E IMPRIMO LOS BEST SCORES    
+        //UBICO E IMPRIMO LOS BEST SCORES   
+        
+        //NAME
+        const inputName = document.querySelector('input').value;                
+        const userNameContainer = document.querySelector('.span-name-input');
+        userNameContainer.textContent = inputName;
 
+        //YETIS
         if (this.deadYetis > this.highScoreDeadYetis){
             this.highScoreDeadYetis = this.deadYetis;
             localStorage.setItem(SAVE_KEY_YETIS_SCORE, this.highScoreDeadYetis);
+            localStorage.setItem(SAVE_KEY_USER_NAME, inputName)
         }    
 
         const bestYetisKilled = document.querySelector('.best-yetis-killed');
         bestYetisKilled.textContent = this.highScoreDeadYetis;
 
+        //DISTANCE
         if (this.distance > this.highScoreDistance){
             this.highScoreDistance = this.distance;
             localStorage.setItem(SAVE_KEY_DISTANCE_SCORE, this.highScoreDistance); 
+            localStorage.setItem(SAVE_KEY_USER_NAME, inputName)
         }
         
         const bestDistance = document.querySelector('.best-distance');
-        bestDistance.textContent = this.highScoreDistance;      
+        bestDistance.textContent = this.highScoreDistance;          
     }
 
     stop() {
         clearInterval(this.intervalId);
         this.intervalId = null;
     }
-
 }
 

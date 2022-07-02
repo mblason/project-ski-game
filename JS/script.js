@@ -8,18 +8,16 @@ const imgAnimation = document.getElementById('img-home-animation');
 const instructionsBtn = document.getElementById('instructions-btn');
 const playBtn = document.getElementById('play-btn');
 
-window.addEventListener('onload', homeAnimation);
+window.addEventListener('load', homeAnimation);
 
 function homeAnimation (){  
   setTimeout(() => {      
       imgAnimation.classList.add('animation-paused');
       instructionsBtn.classList.remove('invisible');
       playBtn.classList.remove('invisible');
-    }, 500)
-  //game.homeSound.play(); //me pide que interactue
+    }, 5000)
+   //me pide que interactue
 }
-
-homeAnimation()
 
 // UBICO Y AGREGO LISTENNER AL BTN HOW TO PLAY
 const instructionsText = document.getElementById('instructions-container');
@@ -40,7 +38,7 @@ const diffContainer = document.getElementById('choose-level-container');
 
 playBtn.addEventListener('click', () => {
   homeBackground.classList.add('invisible');
-  diffContainer.classList.remove('invisible');  
+  diffContainer.classList.remove('invisible');
 })
 
 // UBICO BTNS DE LAS DIFFICULTIES
