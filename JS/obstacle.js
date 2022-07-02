@@ -46,8 +46,8 @@ class Obstacle {
     }
 
     move() {
-        this.y += game.vy;
-        this.x += game.vx;        
+        this.y += this.game.vy;
+        this.x += this.game.vx;        
     }
         
     isVisible() {

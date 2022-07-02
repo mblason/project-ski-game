@@ -2,6 +2,43 @@ class Game {
     constructor(ctx) {
         this.ctx = ctx;        
         this.home = [];
+
+        this.diffIndex = 0;
+        this.difficulties = [
+            { // RESTO 1 EN VELOCIDAD        
+                vyDown: -3,
+                vxKindaLeft: 2,
+                vyLeft: -2,
+                vxLeft: 3,
+                vxKindaRight: -2,
+                vyRight: -2,
+                vxRight: -3,
+                vyJump: -5,
+                vyRampJump: -7                       
+            },
+            { //NORMAL
+                vyDown: -4,
+                vxKindaLeft: 3,
+                vyLeft: -3,
+                vxLeft: 4,
+                vxKindaRight: -3,
+                vyRight: -3,
+                vxRight: -4,
+                vyJump: -6,
+                vyRampJump: -8
+            },
+            { // SUMO 2 EN VELOCIDADES
+                vyDown: -7,
+                vxKindaLeft: 5,
+                vyLeft: -5,
+                vxLeft: 6,
+                vxKindaRight: -5,
+                vyRight: -5,
+                vxRight: -6,
+                vyJump: -8,
+                vyRampJump: -10 
+            }
+        ]
              
         this.scoreYetisStr = localStorage.getItem(SAVE_KEY_YETIS_SCORE);  
         this.highScoreDeadYetis = this.scoreYetisStr == null ? 0 : parseInt(this.scoreYetisStr);
@@ -119,7 +156,7 @@ class Game {
                 this.addDog();
             }
 
-            if (this.tickSnowboard == 100){
+            if (this.tickSnowboard == 2000){
                 this.tickSnowboard = 0;
                 this.clearSnowboard();
                 this.addSnowboard();
@@ -253,8 +290,8 @@ class Game {
         this.enemies.forEach(enemy => enemy.move());
         this.player.move();
 
-        if (this.vy == -6 && !this.player.isJumping){
-            this.vy = -4;
+        if (this.vy == this.difficulties[this.diffIndex].vyJump && !this.player.isJumping){
+            this.vy = this.difficulties[this.diffIndex].vyDown;
         }
     }
 
@@ -270,37 +307,38 @@ class Game {
     }
 
     applyActions() {    
+
         // DOWN    
         if (this.actions.ArrowDown && !this.player.invencible) {
-            this.vy = -4;
+            this.vy = this.difficulties[this.diffIndex].vyDown;
             this.vx = 0;
         }
 
         // KINDA LEFT
         if (this.actions.ArrowLeft && this.vy !==0) {
-            this.vx = 3;            
+            this.vx = this.difficulties[this.diffIndex].vxKindaLeft;            
         }
                 
         // LEFT       
         if (this.actions.ArrowLeft  && this.actions.ArrowUp && this.vy !==0) {  
-            this.vy = -3;
-            this.vx = 4;           
+            this.vy = this.difficulties[this.diffIndex].vyLeft;
+            this.vx = this.difficulties[this.diffIndex].vxLeft;            
         }
         
         // KINDA RIGHT
         if (this.actions.ArrowRight && this.vy !==0) {    
-            this.vx = -3;       
+            this.vx = this.difficulties[this.diffIndex].vxKindaRight;           
         } 
 
         // RIGHT
         if (this.actions.ArrowRight && this.actions.ArrowUp && this.vy !==0) {        
-            this.vy = -3;
-            this.vx = -4;         
+            this.vy = this.difficulties[this.diffIndex].vyRight; 
+            this.vx = this.difficulties[this.diffIndex].vxRight;         
         } 
         
         // JUMP 
         if (this.actions.ControlLeft) { 
-            this.vy = -6; 
+            this.vy = this.difficulties[this.diffIndex].vyJump; 
         }         
 
         // SHOOT
@@ -321,12 +359,12 @@ class Game {
                 if (obs.type === 'rainbowRamp'){     
                     this.hitRamp = true;
                     this.player.invencible = true;
-                    this.vy = -8;
+                    this.vy = this.difficulties[this.diffIndex].vyRampJump; 
 
                     setTimeout(() => {
                         this.hitRamp = false;
                         this.player.invencible = false;
-                        this.vy = -4;
+                        this.vy = this.difficulties[this.diffIndex].vyDown; 
                     }, 2000)
                 }  
                 
@@ -341,7 +379,7 @@ class Game {
                        this.gameOver();
                     } else {
                             setTimeout(() => {
-                               this.vy = -4;
+                               this.vy = this.difficulties[this.diffIndex].vyDown;
                             }, 200)
                     }
                 }       
@@ -362,7 +400,7 @@ class Game {
                        this.gameOver();
                     } else {
                             setTimeout(() => {
-                               this.vy = -4;
+                               this.vy = this.difficulties[this.diffIndex].vyDown;
                             }, 200)
                     }
                 }
@@ -379,12 +417,12 @@ class Game {
                     if (obs.type === 'rainbowRamp'){
                         this.hitRamp = true;
                         this.player.invencible = true
-                        this.vy = -8;
+                        this.vy = this.difficulties[this.diffIndex].vyRampJump;
 
                         setTimeout(() => {
                             this.hitRamp = false;
                             this.player.invencible = false;
-                            this.vy = -4;
+                            this.vy = this.difficulties[this.diffIndex].vyDown;
                         }, 1000)
                     }                       
                 
@@ -399,7 +437,7 @@ class Game {
                             this.gameOver();
                         } else {
                             setTimeout(() => {
-                                this.vy = -4;
+                                this.vy = this.difficulties[this.diffIndex].vyDown;
                             }, 200)
                         }   
                     }
@@ -457,9 +495,8 @@ class Game {
                 this.vx = 0;
                 this.hitSnowboard = true;
                 
-
                 setTimeout(() => {
-                    this.vy = -4;
+                    this.vy = this.difficulties[this.diffIndex].vyDown;
                 }, 500)
             }   
         })

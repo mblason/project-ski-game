@@ -112,8 +112,8 @@ class Enemy {
             this.vx = this.x < this.game.player.x ? -1 : -5;
         }
 
-        if(this.game.vy === -8){
-            this.vy = -8;
+        if(this.game.vy == this.game.difficulties[this.game.diffIndex].vyRampJump){
+            this.vy = this.game.difficulties[this.game.diffIndex].vyRampJump;
         }
 
         if (this.isDead){          

@@ -36,10 +36,41 @@ closeInstructionsBtn.addEventListener('click', () => {
 
 // UBICO Y AGREGO LISTENNER AL BTN LET'S PLAY
 const homeBackground = document.getElementById('home-background');
+const diffContainer = document.getElementById('choose-level-container');
 
 playBtn.addEventListener('click', () => {
   homeBackground.classList.add('invisible');
+  diffContainer.classList.remove('invisible');  
+})
+
+// UBICO BTNS DE LAS DIFFICULTIES
+
+const easyDiffBtn = document.getElementById('easy-diff-btn');
+
+easyDiffBtn.addEventListener('click', () => {
+  diffContainer.classList.add('invisible');  
   if (game.intervalId === null) {  
+    game.diffIndex = 0;
+    game.start()
+  }
+})
+
+const normalDiffBtn = document.getElementById('normal-diff-btn');
+
+normalDiffBtn.addEventListener('click', () => {
+  diffContainer.classList.add('invisible');  
+  if (game.intervalId === null) {  
+    game.diffIndex = 1;
+    game.start()
+  }
+})
+
+const hardDiffBtn = document.getElementById('hard-diff-btn');
+
+hardDiffBtn.addEventListener('click', () => {
+  diffContainer.classList.add('invisible');  
+  if (game.intervalId === null) {  
+    game.diffIndex = 2;
     game.start()
   }
 })
@@ -83,3 +114,4 @@ const playAgainBtn = document.getElementById('play-again-btn');
 playAgainBtn.addEventListener('click', () => {
   window.location.reload()
 })
+

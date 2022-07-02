@@ -55,40 +55,40 @@ class Player {
         this.snowballs.forEach(ball => ball.move());
         
         // DOWN
-        if (this.game.vy == -4) {
+        if (this.game.vy == this.game.difficulties[this.game.diffIndex].vyDown) {
             this.img.frameIndex = 0;   
         }
 
         // KINDA LEFT
-        if (this.game.vx == 3){
+        if (this.game.vx == this.game.difficulties[this.game.diffIndex].vxKindaLeft){
             this.img.frameIndex = 1; 
         }
 
         // LEFT
-        if (this.game.vy == -3 && this.game.vx == 4 ){
+        if (this.game.vy == this.game.difficulties[this.game.diffIndex].vyLeft){
             this.img.frameIndex = 2; 
         }
  
         // KINDA RIGHT
-        else if (this.game.vx == -3){
+        else if (this.game.vx == this.game.difficulties[this.game.diffIndex].vxKindaRight){
             this.img.frameIndex = 3; 
         }
 
         // RIGHT
-        if (this.game.vy == -3 && this.game.vx == -4 ){
+        if (this.game.vy == this.game.difficulties[this.game.diffIndex].vyRight && this.game.vx == this.game.difficulties[this.game.diffIndex].vxRight){
             this.img.frameIndex = 4; 
         }
 
         // JUMP
-        if (this.game.vy == -6 && !this.isJumping && !this.game.hitRamp){
+        if (this.game.vy == this.game.difficulties[this.game.diffIndex].vyJump && !this.isJumping && !this.game.hitRamp){
             this.isJumping = true;
-            this.vy = -7;            
+            this.vy = (this.game.difficulties[this.game.diffIndex].vyJump - 1);            
             this.img.frameIndex = 5;
         }
 
         if (this.isJumping){            
             if (this.y < this.ctx.canvas.height * 0.25){
-                this.vy  = 7;
+                this.vy = (this.game.difficulties[this.game.diffIndex].vyJump -1) * -1;
             } else if (this.y > this.ctx.canvas.height / 3){
                 this.vy = 0;
                 this.y = this.ctx.canvas.height / 3;
@@ -109,7 +109,7 @@ class Player {
         }
         
         // RAMP JUMP
-        if (this.game.vy == -8){
+        if (this.game.vy == this.game.difficulties[this.game.diffIndex].vyRampJump){
             this.img.frameIndex = 5;
         }
     }
