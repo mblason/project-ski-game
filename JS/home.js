@@ -16,8 +16,6 @@ class Home {
             snowMedium: ['/Images/Home/Snow_medium.png', 51, 48, this.ctx.canvas.width * 0.08, this.ctx.canvas.height * 0.25],
             snowSmall: ['/Images/Home/Snow_small.png', 66, 44, this.ctx.canvas.width * 0.20, this.ctx.canvas.height * 0.80],
             dryTree: ['/Images/Home/Dry_tree.png', 40, 48, this.ctx.canvas.width * 0.60, this.ctx.canvas.height * 0.30],
-            instructions: []
-            
         }
 
         this.img = new Image();

@@ -1,18 +1,17 @@
 class Dog {
-    constructor(ctx) {
+    constructor(ctx, game) {
         this.ctx = ctx;
+        this.game = game;
                  
         this.img = new Image();
         this.img.src = '/Images/Animated Obstacles/Sprite_dog.png';
         this.w = 37;
         this.h = 30;  
         this.x = 0;   
-        this.y = this.ctx.canvas.height + 200;
+        this.y = this.ctx.canvas.height;
         this.img.frames = 4;
         this.img.frameIndex = 0; 
     
-        this.vx = 2;
-        this.vy = 4;
         this.tickAnimation = 0;
     }
 
@@ -34,28 +33,27 @@ class Dog {
     }
 
     move() {
-        if (this.x < this.ctx.canvas.width * 0.35){
-        this.x += this.vx;
-        this.y -= this.vy; 
-        } else {
-            this.y -= this.vy;
-        }        
+        this.y += this.game.vy;
+        this.x += this.game.vx 
+        /* setTimeout(() => {
+            this.x += this.game.vx + 0.0001; 
+        }, 1500) */   
     }
 
     isVisible() {
-        return this.y >= this.ctx.canvas.height;
+        return (this.y <= this.ctx.canvas.height && this.y >= 0) && (this.x <= this.ctx.canvas.width && this.x >= 0);
     }
 
     animate() {
         this.tickAnimation++;
         
-        if (this.tickAnimation > 4) {
-            this.tick = 0;
+        if (this.tickAnimation > 8) {
+            this.tickAnimation = 0;
             this.img.frameIndex++;
 
-            if (this.img.frameIndex < 2) {                
-            this.img.frameIndex = 0;
-             }
+            if (this.img.frameIndex === 3) {                
+                this.img.frameIndex = 0;
+            }
         }
     }
 }

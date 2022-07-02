@@ -28,22 +28,23 @@ class Player {
         this.snowballsCounter = 0;
     }
 
-    draw() {       
-        this.clearSnowballs(); 
+    draw() {        
         //(img, sx, sy, swidth, sheight, x, y, width, height)        
-        
-        this.ctx.drawImage(
-            this.img,
-            this.img.frameIndex * this.img.width / this.img.frames, 
-            0,
-            this.img.width / this.img.frames,
-            this.img.height,
-            this.x,
-            this.y,
-            this.w,
-            this.h
-        );
+        if(!this.game.enemyEatPlayer){
+            this.ctx.drawImage(
+                this.img,
+                this.img.frameIndex * this.img.width / this.img.frames, 
+                0,
+                this.img.width / this.img.frames,
+                this.img.height,
+                this.x,
+                this.y,
+                this.w,
+                this.h
+            );
+        }
 
+        this.clearSnowballs(); 
         this.snowballs.forEach(ball => ball.draw());
     }
 
@@ -79,7 +80,7 @@ class Player {
         }
 
         // JUMP
-        if (this.game.vy == -6 && !this.isJumping){
+        if (this.game.vy == -6 && !this.isJumping && !this.game.hitRamp){
             this.isJumping = true;
             this.vy = -7;            
             this.img.frameIndex = 5;
@@ -95,11 +96,17 @@ class Player {
             }
         }
 
-        // COLLISIONS
+        // COLLISIONS OBSTACLES
         if (this.game.hitObstacle){
             this.img.frameIndex = 6;
             this.game.hitObstacle = false;
-        }                
+        }          
+        
+        // COLLISION SNOWBOARD MAN
+        if (this.game.hitSnowboard){
+            this.img.frameIndex = 7;
+            this.game.hitSnowboard = false;
+        }
         
         // RAMP JUMP
         if (this.game.vy == -8){

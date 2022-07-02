@@ -2,50 +2,51 @@ class Game {
     constructor(ctx) {
         this.ctx = ctx;        
         this.home = [];
+             
+        this.scoreYetisStr = localStorage.getItem(SAVE_KEY_YETIS_SCORE);  
+        this.highScoreDeadYetis = this.scoreYetisStr == null ? 0 : parseInt(this.scoreYetisStr);
+
+        this.scoreDistanceStr = localStorage.getItem(SAVE_KEY_DISTANCE_SCORE);
+        this.highScoreDistance = this.scoreDistanceStr == null ? 0 : parseInt(this.scoreDistanceStr);
+
+        this.tickDistance = 0;
+        this.distance = 0;    
+        this.deadYetis = 0;
 
         this.backgrounds = [];
         this.tickBackground = 0;
 
         this.player = new Player(this.ctx, this);
         this.hitObstacle = false;
-
-        this.tickDistance = 0;
-        this.distance = 0;
+        this.hitRamp = false;
+        this.hitSnowboard = false;
 
         this.enemies = [];
-        this.deadYetis = 0;
+        this.enemyEatPlayer = false;
         this.minTime = 500;//180000; // 3 min en milisegundos
         this.maxTime = 2000;//300000; // 5 min en milisegundos
         this.randomAppearEnemy = Math.floor(Math.random() * (this.maxTime - this.minTime)) + this.minTime;
         this.tickAppearEnemy = 0; 
-
-        this.distance = 0;
-        this.speed = 0;
 
         this.frequentObs = [];
         this.notFrequentObs = [];
         this.tickFreqObs = 0;
         this.tickNotFreqObs = 0;       
 
-        this.dog = [];
-        this.snowboard = [];       
+        this.dogs = [];
         this.tickDog = 0;
+        this.snowboards = [];    
         this.tickSnowboard = 0;
 
         this.intervalId = null;    
         
         this.actions = {
-            //s: down, w: up, d: right, a: left, Enter: jump, CapsLock: shoot
-            s: false,
-            S: false,
-            w: false,
-            W: false,
-            d: false,
-            D: false,
-            a: false,
-            A: false,
-            Enter: false, 
-            CapsLock: false
+            ArrowDown: false, // down
+            ArrowUp: false, // fullturn
+            ArrowRight: false, // right
+            ArrowLeft: false, // left
+            ControlLeft: false, // jump
+            Space: false // shoot
         }
         
         this.vy = 0;
@@ -53,6 +54,13 @@ class Game {
 
         this.addHomeElements();
         this.setListenners();
+
+        //SOUNDS
+        //this.homeSound = new Audio();
+        //this.homeSound.src = '/Sounds/home-sound.mp3';
+
+        this.snowballSound = new Audio();
+        this.snowballSound.src = '/Sounds/Snowball.mp3'
     }
 
     start() {
@@ -71,15 +79,19 @@ class Game {
             this.tickAppearEnemy++;   
                          
 
-            if(this.vy !== 0){
+            if (this.vy < 0 && this.vy > -8){
                 this.tickDistance++; 
             }
+
+            if (this.vy === -8){
+                this.tickDistance += 5;
+            }
                             
-            if (this.tickDistance == 100){
+            if (this.tickDistance >= 100){
                 this.tickDistance = 0;
                 this.distance++;                                              
             }
-
+        
             const distanceContainer = document.querySelector('.current-distance');          
             distanceContainer.textContent = this.distance;
             
@@ -101,19 +113,19 @@ class Game {
                 this.addNotFrequentObs();
             }
 
-            if (this.tickDog == 1000){
+            if (this.tickDog == 3000){
                 this.tickDog = 0;
                 this.clearDog();
                 this.addDog();
             }
 
-            if (this.tickSnowboard == 500){
+            if (this.tickSnowboard == 100){
                 this.tickSnowboard = 0;
                 this.clearSnowboard();
                 this.addSnowboard();
             }
 
-            if (this.tickAppearEnemy == 300){ // this.randomAppearEnemy
+            if (this.tickAppearEnemy == this.randomAppearEnemy){ 
                 this.tickAppearEnemy = 0;
                 this.addEnemy();
             }
@@ -123,7 +135,6 @@ class Game {
             }
             
         }, 1000 / 60)
-
     }
 
     clear() {
@@ -152,11 +163,11 @@ class Game {
     }
 
     clearDog() {
-        this.dog = this.dog.filter(dog => dog.isVisible());
+        this.dogs = this.dogs.filter(dog => dog.isVisible());
     }
 
     clearSnowboard() {
-        this.snowboard = this.snowboard.filter(snowb => snowb.isVisible());
+        this.snowboards = this.snowboards.filter(snowb => snowb.isVisible());
     }
 
     clearEnemies() {
@@ -169,8 +180,8 @@ class Game {
         this.notFrequentObs.forEach(obs => obs.draw());
         this.player.draw();   
         this.home.forEach(el => el.draw());          
-        this.dog.forEach(dog => dog.draw());
-        this.snowboard.forEach(snowb => snowb.draw());        
+        this.dogs.forEach(dog => dog.draw());
+        this.snowboards.forEach(snowb => snowb.draw());        
         this.enemies.forEach(enemy => enemy.draw());    
     }
 
@@ -218,11 +229,11 @@ class Game {
     }
 
     addDog() {
-        this.dog.push(new Dog(this.ctx))
+        this.dogs.push(new Dog(this.ctx, this))
     }
 
     addSnowboard() {
-        this.snowboard.push(new Snowboard(this.ctx))
+        this.snowboards.push(new Snowboard(this.ctx))
     }
 
     addEnemy() {
@@ -236,8 +247,8 @@ class Game {
         this.backgrounds.forEach(snow => snow.move());
         this.frequentObs.forEach(obs => obs.move());
         this.notFrequentObs.forEach(obs => obs.move());
-        this.dog.forEach(dog => dog.move());
-        this.snowboard.forEach(snowb => snowb.move());
+        this.dogs.forEach(dog => dog.move());
+        this.snowboards.forEach(snowb => snowb.move());
 
         this.enemies.forEach(enemy => enemy.move());
         this.player.move();
@@ -248,59 +259,59 @@ class Game {
     }
 
     setListenners() {
-        document.onkeydown = e => this.switchActions(e.key, true);
-        document.onkeyup = e => this.switchActions(e.key, false);
+        document.onkeydown = e => this.switchActions(e.code, true);
+        document.onkeyup = e => this.switchActions(e.code, false);
     }
 
-    switchActions(key, bool) {
+    switchActions(code, bool) {
         if (!this.player.invencible) {
-            this.actions[key] = bool;        
+            this.actions[code] = bool;        
         }
     }
 
     applyActions() {    
         // DOWN    
-        if ((this.actions.s || this.actions.S) && !this.player.invencible) {
+        if (this.actions.ArrowDown && !this.player.invencible) {
             this.vy = -4;
             this.vx = 0;
         }
 
         // KINDA LEFT
-        if (this.actions.a || this.actions.A) {
+        if (this.actions.ArrowLeft && this.vy !==0) {
             this.vx = 3;            
         }
                 
         // LEFT       
-        if ((this.actions.a || this.actions.A)  && (this.actions.w || this.actions.W)) {  
+        if (this.actions.ArrowLeft  && this.actions.ArrowUp && this.vy !==0) {  
             this.vy = -3;
             this.vx = 4;           
         }
         
         // KINDA RIGHT
-        if (this.actions.d || this.actions.D) {    
+        if (this.actions.ArrowRight && this.vy !==0) {    
             this.vx = -3;       
         } 
 
         // RIGHT
-        if ((this.actions.d || this.actions.D) && (this.actions.w || this.actions.W)) {        
+        if (this.actions.ArrowRight && this.actions.ArrowUp && this.vy !==0) {        
             this.vy = -3;
             this.vx = -4;         
         } 
         
         // JUMP 
-        if (this.actions.Enter) { 
+        if (this.actions.ControlLeft) { 
             this.vy = -6; 
         }         
 
         // SHOOT
-        if (this.actions.CapsLock){
+        if (this.actions.Space && !this.hitRamp){
             this.player.shoot();
         }
     }
     
     checkCollisions() {
-        const lifes = document.querySelectorAll('.life');
-		const lifesLength = lifes.length;       
+        const lives = document.querySelectorAll('.life');
+		const livesLength = lives.length;       
 
         this.frequentObs.forEach(obs => {
 
@@ -308,11 +319,13 @@ class Game {
                 obs.collided = true;
 
                 if (obs.type === 'rainbowRamp'){     
-                    this.player.invencible = true
+                    this.hitRamp = true;
+                    this.player.invencible = true;
                     this.vy = -8;
 
                     setTimeout(() => {
-                        this.player.invencible = false
+                        this.hitRamp = false;
+                        this.player.invencible = false;
                         this.vy = -4;
                     }, 2000)
                 }  
@@ -321,7 +334,7 @@ class Game {
                     this.vy = 0;
                     this.vx = 0;
                     this.hitObstacle = true;
-                    lifes[lifesLength - 1].remove();
+                    lives[livesLength - 1].remove();
                     this.player.playerReceiveDamage(1);
 
                     if (this.player.health < 1) {
@@ -333,12 +346,26 @@ class Game {
                     }
                 }       
                 
-                if (this.player.isJumping && (obs.type === 'cutTree' || obs.type === 'rock')){
+                if (this.player.isJumping && (obs.type === 'cutTree' || obs.type === 'rock' || obs.type === 'rainbowRamp')){
                         this.player.invencible = true;
                         setTimeout(() => {
                             this.player.invencible = false;
                         }, 100)
+                } else if (this.player.isJumping && (obs.type !== 'cutTree' || obs.type !== 'rock')) {
+                    this.vy = 0;
+                    this.vx = 0;
+                    this.hitObstacle = true;
+                    lives[livesLength - 1].remove();
+                    this.player.playerReceiveDamage(1);
+
+                    if (this.player.health < 1) {
+                       this.gameOver();
+                    } else {
+                            setTimeout(() => {
+                               this.vy = -4;
+                            }, 200)
                     }
+                }
             }
         })
     
@@ -350,10 +377,12 @@ class Game {
                 if (obs.collide(this.player)) {
                     
                     if (obs.type === 'rainbowRamp'){
+                        this.hitRamp = true;
                         this.player.invencible = true
                         this.vy = -8;
 
                         setTimeout(() => {
+                            this.hitRamp = false;
                             this.player.invencible = false;
                             this.vy = -4;
                         }, 1000)
@@ -363,7 +392,7 @@ class Game {
                         this.vy = 0;
                         this.vx = 0;
                         this.hitObstacle = true;
-                        lifes[lifesLength - 1].remove();
+                        lives[livesLength - 1].remove();
                         this.player.playerReceiveDamage(1);
 
                         if (this.player.health < 1) {
@@ -382,14 +411,20 @@ class Game {
 
             if (enemy.collide(this.player)){
 
-                if(!enemy.isDead){                
+                if (!enemy.isDead){           
+                    this.enemyEatPlayer = true;     
                     this.player.playerReceiveDamage(4);
-                    let lifes = document.querySelectorAll('.life');
-                    lifes.forEach(heart => heart.remove());                 
-                    this.gameOver();
+                    let lives = document.querySelectorAll('.life');
+                    lives.forEach(heart => heart.remove());     
+                    this.vy = 0;
+                    this.vx = 0;
+                    setTimeout(() => {
+                        this.gameOver();
+                    }, 850)         
                 } 
                 
-                if(this.isDead){
+                if (this.isDead){
+                    this.enemyEatPlayer = false; 
                     this.player.invencible = true;
                     setTimeout(() => {
                         this.player.invencible = false;
@@ -404,21 +439,35 @@ class Game {
                     this.player.snowballs.splice(index, 1);
                     
 
-                    if (snowball.collided === true && !enemy.isDead) {
+                    if (snowball.collided === true && !enemy.isDead && !this.enemyEatPlayer) {
+                        this.snowballSound.play();
                         enemy.enemyReceiveDamage(1);
                         enemy.isDead = true;
                         this.deadYetis++;
                         const deadYetiContainer = document.querySelector('.count-yetis-killed');
-                        deadYetiContainer.textContent = this.deadYetis;
-                    }         
-                }
-            })                      
+                        deadYetiContainer.textContent = this.deadYetis;  
+                    }
+                } 
+            })                     
+        })
+
+        this.snowboards.forEach((man) => {            
+            if (man.collide(this.player)){
+                this.vy = 0;
+                this.vx = 0;
+                this.hitSnowboard = true;
+                
+
+                setTimeout(() => {
+                    this.vy = -4;
+                }, 500)
+            }   
         })
     }
  
-    gameOver() {
+    gameOver() {         
         clearInterval(this.intervalId);
-        this.intervalId = null;
+        this.intervalId = null; 
 
         //UBICO Y HAGO VISIBLE EL GAME OVER CONTAINER
         const gameOverContainer = document.getElementById('game-over-container');
@@ -431,13 +480,29 @@ class Game {
         const finalDistanceTraveled = document.querySelector('.final-distance');
         finalDistanceTraveled.textContent = this.distance;
 
-        //UBICO E IMPRIMO LOS BEST SCORES - TO DO 
+        //UBICO E IMPRIMO LOS BEST SCORES    
 
+        if (this.deadYetis > this.highScoreDeadYetis){
+            this.highScoreDeadYetis = this.deadYetis;
+            localStorage.setItem(SAVE_KEY_YETIS_SCORE, this.highScoreDeadYetis);
+        }    
+
+        const bestYetisKilled = document.querySelector('.best-yetis-killed');
+        bestYetisKilled.textContent = this.highScoreDeadYetis;
+
+        if (this.distance > this.highScoreDistance){
+            this.highScoreDistance = this.distance;
+            localStorage.setItem(SAVE_KEY_DISTANCE_SCORE, this.highScoreDistance); 
+        }
+        
+        const bestDistance = document.querySelector('.best-distance');
+        bestDistance.textContent = this.highScoreDistance;      
     }
 
     stop() {
         clearInterval(this.intervalId);
         this.intervalId = null;
     }
+
 }
 

@@ -20,11 +20,17 @@ class Enemy {
         this.w = 45;
         this.h = 60;
 
-        // IMG YETI RUNNING 
+        //IMG YETI RUNNING 
         this.imgRunning = new Image();
         this.imgRunning.src = '/Images/Enemy/Yeti_running.png';
-        this.imgRunning.frames = 8
-        this.imgRunning.frameIndex = this.left ? 0 : 4; // PASARLO EN EL CONSTRUCTOR ELLEFT 
+        this.imgRunning.frames = 8;
+        this.imgRunning.frameIndex = this.left ? 0 : 4;
+        
+        //IMG YETI EATING PLAYER
+        this.imgEating = new Image();
+        this.imgEating.src = '/Images/Enemy/Yeti_eating_player.png';
+        this.imgEating.frames = 12;
+        this.imgEating.frameIndex = this.left ? 0 : 6; 
 
         //IMG YETI DEAD
         this.imgDead = new Image();
@@ -39,7 +45,7 @@ class Enemy {
     draw() {                  
         //(img, sx, sy, swidth, sheight, x, y, width, height)
         //EL YETI EN MOVIMIENTO
-        if(!this.isDead){
+        if (!this.isDead && !this.game.enemyEatPlayer){
             this.ctx.drawImage(
                     this.imgRunning,
                     this.imgRunning.frameIndex * this.imgRunning.width / this.imgRunning.frames,
@@ -51,11 +57,27 @@ class Enemy {
                     this.w,
                     this.h
                 ) 
-            this.animate();
+            this.animateYetiRunning();
+        }
+
+        //EL YETI SE COME AL PLAYER
+        if (!this.isDead && this.game.enemyEatPlayer){            
+                this.ctx.drawImage(
+                    this.imgEating,
+                    this.imgEating.frameIndex * this.imgEating.width / this.imgEating.frames,
+                    0,
+                    this.imgEating.width / this.imgEating.frames,
+                    this.imgEating.height,
+                    this.x,
+                    this.y,
+                    this.w,
+                    this.h
+                ) 
+                this.animateYetiEatingPlayer();
         }
 
         // EL YETI COLLISSION CON LA SNOWBALL ES DECIR KILLED
-        if (this.isDead){          
+        if (this.isDead && !this.game.enemyEatPlayer){          
             this.w = 30;
             this.h = 40;
 
@@ -98,27 +120,47 @@ class Enemy {
             this.vx = this.game.vx;
             this.vy = this.game.vy;
         }        
+
+        if(!this.isDead && this.game.enemyEatPlayer){
+            this.vy = 0;
+            this.vx = 0;
+        }
     }
 
-    animate() {
+    animateYetiRunning() {
         this.tickAnimation++;
     
         if (this.tickAnimation > 8) {
             this.tickAnimation = 0;
             this.imgRunning.frameIndex++; 
 
-            if (this.left && this.imgRunning.frameIndex) {
-                console.log(this.imgRunning.frameIndex)
-            }
             if (this.left && this.imgRunning.frameIndex >= 4){
-                 this.imgRunning.frameIndex = 0;
+                this.imgRunning.frameIndex = 0;
             }
+
             if (!this.left && this.imgRunning.frameIndex >= 8){
-                 this.imgRunning.frameIndex = 4;
+                this.imgRunning.frameIndex = 4;
             }
         }          
     }
     
+    animateYetiEatingPlayer(){
+        this.tickAnimation++;
+    
+        if (this.tickAnimation > 8) {
+            this.tickAnimation = 0;
+            this.imgEating.frameIndex++; 
+
+            if (this.left && this.imgEating.frameIndex === 5){
+                this.imgEating.frameIndex = 5;
+            }
+
+            if (!this.left && this.imgEating.frameIndex === 11){
+                this.imgEating.frameIndex = 11;
+            }
+        }
+    }
+
     collide(el) {
         const collideX = el.x + el.w > this.x && el.x < this.x + this.w;
         const collideY = el.y < this.y + this.h && el.y + el.h > this.y;

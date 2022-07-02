@@ -3,12 +3,30 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const game = new Game(ctx);
 
-// UBICO Y AGREGO LISTENNER AL BTN HOW TO PLAY
+// PAUSO LA ANIMACIÓN
+const imgAnimation = document.getElementById('img-home-animation');
 const instructionsBtn = document.getElementById('instructions-btn');
+const playBtn = document.getElementById('play-btn');
+
+window.addEventListener('onload', homeAnimation);
+
+function homeAnimation (){  
+  setTimeout(() => {      
+      imgAnimation.classList.add('animation-paused');
+      instructionsBtn.classList.remove('invisible');
+      playBtn.classList.remove('invisible');
+    }, 500)
+  //game.homeSound.play(); //me pide que interactue
+}
+
+homeAnimation()
+
+// UBICO Y AGREGO LISTENNER AL BTN HOW TO PLAY
 const instructionsText = document.getElementById('instructions-container');
 const closeInstructionsBtn = document.getElementById('close-instructions-btn');
 
 instructionsBtn.addEventListener('click', () => {
+  console.log('entro')
   instructionsText.classList.remove("invisible");
 });
 
@@ -17,7 +35,6 @@ closeInstructionsBtn.addEventListener('click', () => {
 });
 
 // UBICO Y AGREGO LISTENNER AL BTN LET'S PLAY
-const playBtn = document.getElementById('play-btn');
 const homeBackground = document.getElementById('home-background');
 
 playBtn.addEventListener('click', () => {

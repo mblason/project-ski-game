@@ -106,6 +106,8 @@ body {
     padding-left: 5px;
     padding-right: 5px;
     border-radius: 3px;
+    border: 3px solid black;
+    height: 30px;
 }
 
 #metrics-container {
@@ -118,16 +120,16 @@ body {
     text-align: center;
 }
 
-#metrics-container #lifes-container {
-    height: 45px;
+#metrics-container #lives-container {
+    height: 31px;
     display: flex;
     align-items: center;
 }
 
-#metrics-container #lifes-container .hearts-container img {
-    height: 25px;
-    margin-bottom: 10px;
-    margin-left: 5px;
+#metrics-container #lives-container .hearts-container img {
+    height: 24px;
+    margin-bottom: 0;
+    margin-left: 2px;
 }
 
 #metrics-container #yetis-killed-container {
@@ -160,7 +162,7 @@ body {
 #commands-container {
     position: absolute;
     z-index: 2;
-    height: 250px;
+    height: 220px;
     width: 450px;
     top: 10%;
     left: 1.4%;
@@ -171,22 +173,81 @@ body {
 } 
 
 #commands-container img {
-    height: 100px;
+    height: 120px;
 }
 
- #commands-container > button {
+#commands-container > button {
     position: absolute;
     width: 80px;
-    height: 35px;
+    height: 40px;
     border-radius: 3px;
     border: 3px solid whitesmoke;        
-    bottom: 10%;
+    bottom: 5%;
     left: 40%;
     color: whitesmoke;
     background-color: black;
  }
 
+#choose-level-container{
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    z-index: 4;
+    height: 350px;
+    width: 700px;
+    padding: 25px;
+    border: 3px solid black;
+    border-radius: 3px;
+    background-color: whitesmoke;
+}
+
+#choose-level-container > h2 {
+    text-align: center;
+}
+
+#choose-level-container .input-container{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;   
+    margin-bottom: 5%;
+}
+
+#choose-level-container .level-btn-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;    
+}
+
+#choose-level-container .level-btn-container div > button {
+    margin-top: 10%;
+    text-align:center;
+    width: 200px;
+    height: 100px;
+    border: 3px solid black;
+    border-radius: 3px;
+    background-color: whitesmoke;
+}
+#choose-level-container .level-btn-container small{
+    width: 200px;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+#choose-level-container #lets-go-btn{
+    width: 80px;
+    height: 40px;
+    border-radius: 3px;
+    border: 3px solid whitesmoke;
+    position: absolute;
+    bottom: 5%;
+    left: 45%;
+    color: whitesmoke;
+    background-color: black;
+}
+
 #home-background {
+    box-sizing: border-box;
     position: absolute;
     z-index: 3;
     height: 100vh;
@@ -201,11 +262,30 @@ body {
 #home-background img {
     position: absolute;
     top: 0%;
-    height: 450px;
+    animation-duration: 8s;
+    animation-name: zooming;
+    animation-direction: normal;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.animation-paused{
+    animation-play-state: paused;
+}
+
+@keyframes zooming {
+    from {
+        height: 200px;
+    }
+
+    to {
+        height: 450px;
+    }
 }
 
 #buttons-home-container {
     position: absolute;
+    z-index: 4;
     top: 80%;
     left: 34%;
 }
@@ -234,7 +314,7 @@ body {
 
 #instructions {    
     position: relative;
-    height: 600px;
+    height: 580px;
     width: 700px;
     padding: 25px;
     border: 3px solid black;
@@ -253,17 +333,17 @@ body {
 }
 
 #instructions img {
-    width: 500px;
+    height: 160px;
     margin-left: 9%;
 }
 
 #instructions #close-instructions-btn {
     width: 80px;
-    height: 35px;
+    height: 40px;
     border-radius: 3px;
     border: 3px solid whitesmoke;
     position: absolute;
-    bottom: 10%;
+    bottom: 5%;
     left: 45%;
     color: whitesmoke;
     background-color: black;

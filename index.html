@@ -19,8 +19,8 @@
         </div>
 
         <div id="metrics-container">        
-            <div id="lifes-container">
-                <span class="text-span">LIFES:</span>
+            <div id="lives-container">
+                <span class="text-span">LIVES:</span>
                 <div class="hearts-container">
                     <img class="life" src="/Images/Home/Life_heart.png" alt="heart">
                     <img class="life" src="/Images/Home/Life_heart.png" alt="heart">
@@ -44,17 +44,17 @@
     </div>
 
     <div id="commands-container" class="invisible">
-        <img src="/Images/Home/Commands_0.png" alt="commands">
+        <img src="/Images/Home/Commands.png" alt="commands">
         <br>
         <br>
         <button id="close-commands-btn">CLOSE</button>
     </div>
 
     <div id="home-background">
-        <img src="Images/Home/Name_game.png" alt="game logo">
+        <img src="Images/Home/Name_game.png" id="img-home-animation" alt="game logo">
         <div id="buttons-home-container">      
-            <button id="instructions-btn">HOW TO PLAY</button>
-            <button id="play-btn">LET'S PLAY</button>
+            <button id="instructions-btn" class="invisible">HOW TO PLAY</button>
+            <button id="play-btn" class="invisible">LET'S PLAY</button>
         </div>
     </div>
 
@@ -65,17 +65,41 @@
             <br>  
             <ul>
                 <li>Avoid the obstacles, otherwise they will take lives away from you.</li>
-                <li>If any yeti appear, throw snowballs at them to knock them down.</li>
-                <li>The yeti will die if you throw a snowballs at it.</li>
-                <li>But watch out! If the yeti manages to reach you... it will eat you!</li>
+                <li>You can only jump rocks and cut trees.</li>
+                <li>If any yeti appears, throw snowballs at them to knock them down.</li>
+                <li>The yeti will die if you throw a snowball at it.</li>
+                <li>But watch out! If the yeti manages to catch you... it will eat you!</li>
             </ul>
             <br>
             <br>
-            <img src="/Images/Home/Commands_0.png" alt="commands">
+            <img src="/Images/Home/Commands.png" alt="commands">
             <br>
             <br>
             <button id="close-instructions-btn">CLOSE</button>
         </div>    
+    </div>
+
+    <div id="choose-level-container" class="invisible">        
+        <div class="input-container">
+            <h2>ENTER YOUR NAME:</h2>            
+            <input type="text"></input>
+        </div>
+        <h2>CHOOSE THE DIFFICULTY:</h2>
+        <div class="level-btn-container">    
+            <div>       
+                <button>EASY</button>
+                <small>I’VE NEVER KILLED A YETI BEFORE</small>
+            </div> 
+            <div>
+                <button>NORMAL</button>
+                <small>I USED TO KILL SOME YETIS</small>
+            </div>
+            <div>
+                <button>HARD</button>   
+                 <small>KILL YETIS = PIECE OF CAKE</small>
+            </div>
+        </div>
+        <button id="lets-go-btn">LET'S GO!</button>       
     </div>
 
     <div id="game-over-container" class="invisible">
@@ -120,6 +144,7 @@
     <script src="/JS/enemy.js"></script>
     <script src="/JS/player.js"></script>    
     <script src="/JS/game.js"></script>
+    <script src="/JS/constants.js"></script>
     <script src="/JS/script.js"></script>    
 </body>
 

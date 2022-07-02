@@ -6,7 +6,12 @@ class Snowboard {
         this.img.src = '/Images/Animated Obstacles/Sprite_Snowboarding.png';
         this.w = 40;
         this.h = 60;   
-        this.x = this.ctx.canvas.width * 0.80; 
+
+        this.maxX = this.ctx.canvas.width - 60;
+        this.minX = this.ctx.canvas.width * 0.30;
+        this.randomX = Math.floor(Math.random() * (this.maxX - this.minX)) + this.minX;
+
+        this.x = this.randomX;
         this.y = 0;
         this.img.frames = 4;
         this.img.frameIndex = 0; 
@@ -62,14 +67,21 @@ class Snowboard {
     animate() {
         this.tickAnimation++;
         
-        if (this.tickAnimation > 50) {
-            this.tick = 0;
+        if (this.tickAnimation > 15) {
+            this.tickAnimation = 0;
             this.img.frameIndex++;
 
-            if (this.img.frameIndex >= this.img.frames) {                
-            this.img.frameIndex = 0;
-             }
+            if (this.img.frameIndex === 3) {                
+                this.img.frameIndex = 0;
+            }
         }
     }
-    
+
+    collide(el) {
+        const treshold = 10;
+        const collideX = el.x + el.w - treshold > this.x && el.x + treshold < this.x + this.w;
+        const collideY = el.y + treshold < this.y + this.h && el.y + el.h > this.y;
+
+        return collideX && collideY;
+    }
 }
