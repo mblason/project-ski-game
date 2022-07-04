@@ -29,6 +29,15 @@ body {
     display: block;
 }
 
+button:hover {
+    cursor: pointer;
+    color:rgb(18, 18, 85);
+}
+
+#buttons-home-container button:hover{
+    color: rgb(18, 18, 85);
+}
+
 #game-over-container {
     position: absolute;
     z-index: 1;
@@ -41,7 +50,6 @@ body {
     padding: 25px;
     background-color: whitesmoke;
     color: black;
-    
 }
 
 #game-over-container h2 {
@@ -50,7 +58,7 @@ body {
 }
 
 #game-over-container #columns-score {
-    margin-top: 10%;
+    margin-top: 8%;
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -58,7 +66,11 @@ body {
     position: relative;
 }
 
-#game-over-container #columns-score div > h3 {    
+#game-over-container #columns-score > div {
+    height: 100px;
+}
+
+#game-over-container #columns-score div h3 {    
     text-decoration: underline;
     height: 20px;
     margin-bottom: 10%;    
@@ -72,29 +84,30 @@ body {
     height: 15px;
 }
 
-#game-over-container #best-score {
-    position: relative;
+.best-distance {
+    margin-right: 0%;
 }
-
-#game-over-container #name-user{
+#game-over-container #columns-score .meters {
+    margin-left: 0%;
+}
+#game-over-container #name-user {
     display: flex;
     flex-direction: row;
     align-items: start;
 }
 
-#game-over-container #name-user .span-name-input{
-    position: absolute;
-    top: 0%;
-    right: 15%;
-    text-align: center;
-    height: 20px;
-    
+#game-over-container #name-user .span-name-input {
+    margin-left: 5px;
+}
+
+#game-over-container #best-score {
+    position: relative;
 }
 
 #game-over-container #play-again-btn {
     position: absolute;  
     right: 38%;  
-    bottom: 10%;
+    bottom: 5%;
     width: 120px;
     height: 40px;
     border-radius: 3px;
@@ -127,6 +140,7 @@ body {
     padding-right: 5px;
     border-radius: 3px;
     border: 3px solid black;
+    width: 80px;
     height: 30px;
 }
 
@@ -208,6 +222,24 @@ body {
     background-color: black;
  }
 
+#countdown-container{
+    position: absolute;
+    width: 50px;
+    top: 52.5%;
+    left: 42%;
+    color: white;
+    font-size: 1.5rem;
+    width: 263px;
+}
+
+#countdown-container p { 
+    width: 263px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+    padding-top: 6px;
+}
+
 #choose-level-container{
     position: absolute;
     top: 25%;
@@ -227,30 +259,54 @@ body {
 
 #choose-level-container .input-container{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     text-align: center;
     justify-content: center;   
-    margin-bottom: 5%;
+    align-items: center;
+    line-height: 2.5rem;
+    margin-bottom: 5%;    
+}
+
+#choose-level-container input{
+    width: 150px;
+    height: 30px;
+    text-align: start;
+    background-color: black;
+    color: whitesmoke;
+    text-align: center;
+    border-radius: 3px;
 }
 
 #choose-level-container .level-btn-container{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;    
+    justify-content: space-around;
+    align-items: center;
+    width: 645px;
+}
+
+#choose-level-container .level-btn-container div{
+    width: 195px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.5rem;
+
 }
 
 #choose-level-container .level-btn-container div > button {
     margin-top: 10%;
     text-align:center;
-    width: 200px;
+    width: 195px;
     height: 100px;
     border: 3px solid black;
     border-radius: 3px;
     background-color: whitesmoke;
+    font-size: 2rem;
 }
+
 #choose-level-container .level-btn-container small{
-    width: 200px;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     text-align: center;
 }
 
@@ -281,8 +337,8 @@ body {
 
 #home-background img {
     position: absolute;
-    top: 0%;
-    animation-duration: 8s;
+    top: 20px;
+    animation-duration: 5s;
     animation-name: zooming;
     animation-direction: normal;
     animation-iteration-count: 1;
@@ -303,10 +359,17 @@ body {
     }
 }
 
+#home-background small {
+    position: absolute;
+    bottom: 15px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+}
+
 #buttons-home-container {
     position: absolute;
     z-index: 4;
-    top: 80%;
+    bottom: 150px;
     left: 34%;
 }
 

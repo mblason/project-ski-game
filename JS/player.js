@@ -65,7 +65,7 @@ class Player {
         }
 
         // LEFT
-        if (this.game.vy == this.game.difficulties[this.game.diffIndex].vyLeft){
+        if (this.game.vx == this.game.difficulties[this.game.diffIndex].vxLeft && this.game.vy == this.game.difficulties[this.game.diffIndex].vyLeft){
             this.img.frameIndex = 2; 
         }
  
@@ -75,7 +75,7 @@ class Player {
         }
 
         // RIGHT
-        if (this.game.vy == this.game.difficulties[this.game.diffIndex].vyRight && this.game.vx == this.game.difficulties[this.game.diffIndex].vxRight){
+        if (this.game.vx == this.game.difficulties[this.game.diffIndex].vxRight && this.game.vy == this.game.difficulties[this.game.diffIndex].vyRight){
             this.img.frameIndex = 4; 
         }
 

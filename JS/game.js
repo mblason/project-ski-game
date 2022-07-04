@@ -2,12 +2,10 @@ class Game {
     constructor(ctx) {
         this.ctx = ctx;        
         this.home = [];
-        this.homeSound = new Audio();
-        this.homeSound.src = '/Sounds/home-sound.mp3';
-        this.homeSound.autoplay = true;
+
         this.diffIndex = 0;
         this.difficulties = [
-            { // RESTO 1 EN VELOCIDAD        
+            { //RESTO 1 EN VELOCIDAD        
                 vyDown: -3,
                 vxKindaLeft: 2,
                 vyLeft: -2,
@@ -16,20 +14,24 @@ class Game {
                 vyRight: -2,
                 vxRight: -3,
                 vyJump: -5,
-                vyRampJump: -7                       
+                vyRampJump: -7,
+                minTimeEnemy: 1000,
+                maxTimeEnemy: 2000                      
             },
             { //NORMAL
-                vyDown: -4,
+                vyDown: -5,
                 vxKindaLeft: 3,
-                vyLeft: -3,
+                vyLeft: -4,
                 vxLeft: 4,
                 vxKindaRight: -3,
-                vyRight: -3,
+                vyRight: -4,
                 vxRight: -4,
-                vyJump: -6,
-                vyRampJump: -8
+                vyJump: -7,
+                vyRampJump: -9,
+                minTimeEnemy: 500,
+                maxTimeEnemy: 2000  
             },
-            { // SUMO 2 EN VELOCIDADES
+            { //SUMO 2 EN VELOCIDADES
                 vyDown: -7,
                 vxKindaLeft: 5,
                 vyLeft: -5,
@@ -38,7 +40,9 @@ class Game {
                 vyRight: -5,
                 vxRight: -6,
                 vyJump: -8,
-                vyRampJump: -10 
+                vyRampJump: -10,
+                minTimeEnemy: 500,
+                maxTimeEnemy: 1000
             }
         ]
              
@@ -48,7 +52,8 @@ class Game {
         this.scoreDistanceStr = localStorage.getItem(SAVE_KEY_DISTANCE_SCORE);
         this.highScoreDistance = this.scoreDistanceStr == null ? 0 : parseInt(this.scoreDistanceStr);
 
-        this.userName = localStorage.getItem(SAVE_KEY_USER_NAME);
+        this.scoreNameStr = localStorage.getItem(SAVE_KEY_USER_NAME);
+        this.userName = this.scoreDistanceStr == null ? '' : this.scoreNameStr;
 
         this.tickDistance = 0;
         this.distance = 0;    
@@ -64,8 +69,8 @@ class Game {
 
         this.enemies = [];
         this.enemyEatPlayer = false;
-        this.minTime = 500;//180000; // 3 min en milisegundos
-        this.maxTime = 2000;//300000; // 5 min en milisegundos
+        this.minTime = this.difficulties[this.diffIndex].minTimeEnemy;
+        this.maxTime = this.difficulties[this.diffIndex].maxTimeEnemy;
         this.randomAppearEnemy = Math.floor(Math.random() * (this.maxTime - this.minTime)) + this.minTime;
         this.tickAppearEnemy = 0; 
 
@@ -87,6 +92,7 @@ class Game {
             ArrowRight: false, // right
             ArrowLeft: false, // left
             ControlLeft: false, // jump
+            ControlRight: false, // jump
             Space: false // shoot
         }
         
@@ -97,11 +103,27 @@ class Game {
         this.setListenners();
 
         //SOUNDS
-        //this.homeSound = new Audio();
-        //this.homeSound.src = '/Sounds/home-sound.mp3';
+        this.homeSound = new Audio();
+        this.homeSound.src = '/Sounds/Home-sound.mp3';
+        this.homeSound.autoplay = true;
+
+        this.btnSound = new Audio();
+        this.btnSound.src = '/Sounds/buttons.wav';
 
         this.snowballSound = new Audio();
-        this.snowballSound.src = '/Sounds/Snowball.mp3'
+        this.snowballSound.src = '/Sounds/Snowball.mp3';
+
+        this.collisionSound = new Audio();
+        this.collisionSound.src = '/Sounds/Ouch.mp3'
+
+        this.jumpSound = new Audio();
+        this.jumpSound.src = '/Sounds/Jump.mp3';
+
+        this.eatingSound = new Audio();
+        this.eatingSound.src = '/Sounds/Yeti_eating.mp3';
+
+        this.gameOverSound = new Audio();
+        this.gameOverSound.src = '/Sounds/Game-over.mp3';
     }
 
     start() {
@@ -241,7 +263,10 @@ class Game {
             new Home(this.ctx, 'snowMedium', this),
             new Home(this.ctx, 'snowSmall', this),
             new Home(this.ctx, 'dryTree', this),
-            new Home(this.ctx, 'startLine', this),
+            new Home(this.ctx, 'dryTree2', this),
+            new Home(this.ctx, 'dryTree3', this),
+            new Home(this.ctx, 'dryTree4', this),
+            new Home(this.ctx, 'startFlag', this),
             new Home(this.ctx, 'redFlagOne', this),
             new Home(this.ctx, 'blueFlagOne', this),
             new Home(this.ctx, 'redFlagTwo', this),
@@ -305,48 +330,48 @@ class Game {
     }
 
     switchActions(code, bool) {
-        if (!this.player.invencible) {
+        if (!this.player.invencible && !this.hitRamp) {
             this.actions[code] = bool;        
         }
     }
 
     applyActions() {    
-
         // DOWN    
-        if (this.actions.ArrowDown && !this.player.invencible) {
+        if (this.actions.ArrowDown && !this.player.invencible && !this.hitRamp) {
             this.vy = this.difficulties[this.diffIndex].vyDown;
             this.vx = 0;
         }
 
         // KINDA LEFT
-        if (this.actions.ArrowLeft && this.vy !== 0) {
+        if (this.actions.ArrowLeft && this.vy !== 0 && !this.hitRamp) {
             this.vx = this.difficulties[this.diffIndex].vxKindaLeft;            
         }
                 
         // LEFT       
-        if (this.actions.ArrowLeft  && this.actions.ArrowUp && this.vy !== 0) {  
+        if (this.actions.ArrowLeft && this.actions.ArrowUp && this.vy !== 0 && !this.hitRamp) {  
             this.vy = this.difficulties[this.diffIndex].vyLeft;
             this.vx = this.difficulties[this.diffIndex].vxLeft;            
         }
         
         // KINDA RIGHT
-        if (this.actions.ArrowRight && this.vy !==0) {    
+        if (this.actions.ArrowRight && this.vy !==0 && !this.hitRamp) {    
             this.vx = this.difficulties[this.diffIndex].vxKindaRight;           
         } 
 
         // RIGHT
-        if (this.actions.ArrowRight && this.actions.ArrowUp && this.vy !==0) {        
+        if (this.actions.ArrowRight && this.actions.ArrowUp && this.vy !==0 && !this.hitRamp) {        
             this.vy = this.difficulties[this.diffIndex].vyRight; 
             this.vx = this.difficulties[this.diffIndex].vxRight;         
         } 
         
         // JUMP 
-        if (this.actions.ControlLeft) { 
+        if ((this.actions.ControlLeft || this.actions.ControlRight) && !this.hitRamp) { 
+            this.jumpSound.play();    
             this.vy = this.difficulties[this.diffIndex].vyJump; 
         }         
 
         // SHOOT
-        if (this.actions.Space && !this.hitRamp && !this.actions.ControlLeft){
+        if (this.actions.Space && !this.hitRamp){
             this.player.shoot();
         }
     }
@@ -360,7 +385,8 @@ class Game {
             if (obs.collide(this.player) && !obs.collided) {
                 obs.collided = true;
 
-                if (obs.type === 'rainbowRamp'){     
+                if (obs.type === 'rainbowRamp'){ 
+                    this.jumpSound.play();    
                     this.hitRamp = true;
                     this.player.invencible = true;
                     this.vy = this.difficulties[this.diffIndex].vyRampJump; 
@@ -372,7 +398,8 @@ class Game {
                     }, 2000)
                 }  
                 
-                if (obs.type !== 'rainbowRamp' && !this.player.isJumping) {               
+                if (obs.type !== 'rainbowRamp' && !this.player.isJumping) { 
+                    this.collisionSound.play();              
                     this.vy = 0;
                     this.vx = 0;
                     this.hitObstacle = true;
@@ -394,6 +421,7 @@ class Game {
                             this.player.invencible = false;
                         }, 100)
                 } else if (this.player.isJumping && (obs.type !== 'cutTree' || obs.type !== 'rock')) {
+                    this.collisionSound.play();
                     this.vy = 0;
                     this.vx = 0;
                     this.hitObstacle = true;
@@ -419,6 +447,7 @@ class Game {
                 if (obs.collide(this.player)) {
                     
                     if (obs.type === 'rainbowRamp'){
+                        this.jumpSound.play();    
                         this.hitRamp = true;
                         this.player.invencible = true
                         this.vy = this.difficulties[this.diffIndex].vyRampJump;
@@ -431,6 +460,7 @@ class Game {
                     }                       
                 
                     if (obs.type !=='rainbowRamp') {   
+                        this.collisionSound.play();        
                         this.vy = 0;
                         this.vx = 0;
                         this.hitObstacle = true;
@@ -453,7 +483,8 @@ class Game {
 
             if (enemy.collide(this.player)){
 
-                if (!enemy.isDead){           
+                if (!enemy.isDead){       
+                    this.eatingSound.play();    
                     this.enemyEatPlayer = true;     
                     this.player.playerReceiveDamage(4);
                     let lives = document.querySelectorAll('.life');
@@ -510,43 +541,47 @@ class Game {
         clearInterval(this.intervalId);
         this.intervalId = null; 
 
+        this.gameOverSound.play();
+
         //UBICO Y HAGO VISIBLE EL GAME OVER CONTAINER
         const gameOverContainer = document.getElementById('game-over-container');
         gameOverContainer.classList.remove('invisible');
 
-        //UBICO E IMPRIMO LOS SCORES FINALES
+        //UBICO E IMPRIMO LOS SCORES 
+        //YETIS
         const finalYetisKilled = document.querySelector('.final-yetis-killed');
         finalYetisKilled.textContent = this.deadYetis;
 
+        //DISTANCE
         const finalDistanceTraveled = document.querySelector('.final-distance');
         finalDistanceTraveled.textContent = this.distance;
-
-        //UBICO E IMPRIMO LOS BEST SCORES   
         
         //NAME
         const inputName = document.querySelector('input').value;                
         const userNameContainer = document.querySelector('.span-name-input');
-        userNameContainer.textContent = inputName;
-
-        //YETIS
-        if (this.deadYetis > this.highScoreDeadYetis){
-            this.highScoreDeadYetis = this.deadYetis;
-            localStorage.setItem(SAVE_KEY_YETIS_SCORE, this.highScoreDeadYetis);
-            localStorage.setItem(SAVE_KEY_USER_NAME, inputName)
-        }    
+        
+        //UBICO E IMPRIMO LOS BEST SCORES  
 
         const bestYetisKilled = document.querySelector('.best-yetis-killed');
-        bestYetisKilled.textContent = this.highScoreDeadYetis;
+        const bestDistance = document.querySelector('.best-distance');
+      
+        if (this.deadYetis > this.highScoreDeadYetis || this.distance > this.highScoreDistance){
+            this.highScoreDeadYetis = this.deadYetis;
+            localStorage.setItem(SAVE_KEY_YETIS_SCORE, this.highScoreDeadYetis);
+            bestYetisKilled.textContent = this.highScoreDeadYetis; 
 
-        //DISTANCE
-        if (this.distance > this.highScoreDistance){
             this.highScoreDistance = this.distance;
             localStorage.setItem(SAVE_KEY_DISTANCE_SCORE, this.highScoreDistance); 
-            localStorage.setItem(SAVE_KEY_USER_NAME, inputName)
-        }
-        
-        const bestDistance = document.querySelector('.best-distance');
-        bestDistance.textContent = this.highScoreDistance;          
+            bestDistance.textContent = this.highScoreDistance;  
+
+            this.userName = inputName;            
+            localStorage.setItem(SAVE_KEY_USER_NAME, this.userName);
+            userNameContainer.textContent = this.userName;           
+        }  else {
+            bestYetisKilled.textContent = this.highScoreDeadYetis; 
+            bestDistance.textContent = this.highScoreDistance; 
+            userNameContainer.textContent = this.userName;
+        }      
     }
 
     stop() {

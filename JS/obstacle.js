@@ -14,8 +14,7 @@ class Obstacle {
         this.randomY = Math.floor(Math.random() * (this.maxY - this.minY)) + this.minY;        
 
         this.types = { 
-            // key: [url img, width, height, x, y]
-            
+            // key: [url img, width, height, x, y]            
             tree: ['/Images/Frequent Obstacles/Tree.png', 48, 60, this.randomX, this.randomY],
             dryTree: ['/Images/Frequent Obstacles/Dry_tree.png', 40, 48, this.randomX, this.randomY],
             cutTree: ['/Images/Frequent Obstacles/Cut_tree.png', 32, 24, this.randomX, this.randomY],
