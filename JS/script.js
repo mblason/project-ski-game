@@ -4,8 +4,8 @@ const ctx = canvas.getContext('2d');
 const game = new Game(ctx);
 
 //INICIO LA MUSICA Y PAUSO LA ANIMACIÓN DEL LOGO 
-window.addEventListener('load', () =>
-{ game.homeSound.play() 
+window.addEventListener('load', () => { 
+  game.homeSound.play() 
   homeAnimation()
 });
 

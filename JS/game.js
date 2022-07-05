@@ -105,8 +105,7 @@ class Game {
         //SOUNDS
         this.homeSound = new Audio();
         this.homeSound.src = './Sounds/Home-sound.mp3';
-        this.homeSound.autoplay = true;
-
+        
         this.btnSound = new Audio();
         this.btnSound.src = './Sounds/buttons.wav';
 
