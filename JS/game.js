@@ -5,7 +5,7 @@ class Game {
 
         this.diffIndex = 0;
         this.difficulties = [
-            { //RESTO 1 EN VELOCIDAD        
+            { //EASY        
                 vyDown: -3,
                 vxKindaLeft: 2,
                 vyLeft: -2,
@@ -31,7 +31,7 @@ class Game {
                 minTimeEnemy: 500,
                 maxTimeEnemy: 1000  
             },
-            { //SUMO 2 EN VELOCIDADES
+            { //HARD
                 vyDown: -7,
                 vxKindaLeft: 5,
                 vyLeft: -5,
@@ -104,26 +104,26 @@ class Game {
 
         //SOUNDS
         this.homeSound = new Audio();
-        this.homeSound.src = '/Sounds/Home-sound.mp3';
+        this.homeSound.src = './Sounds/Home-sound.mp3';
         this.homeSound.autoplay = true;
 
         this.btnSound = new Audio();
-        this.btnSound.src = '/Sounds/buttons.wav';
+        this.btnSound.src = './Sounds/buttons.wav';
 
         this.snowballSound = new Audio();
-        this.snowballSound.src = '/Sounds/Snowball.mp3';
+        this.snowballSound.src = './Sounds/Snowball.mp3';
 
         this.collisionSound = new Audio();
-        this.collisionSound.src = '/Sounds/Ouch.mp3'
+        this.collisionSound.src = './Sounds/Ouch.mp3'
 
         this.jumpSound = new Audio();
-        this.jumpSound.src = '/Sounds/Jump.mp3';
+        this.jumpSound.src = './Sounds/Jump.mp3';
 
         this.eatingSound = new Audio();
-        this.eatingSound.src = '/Sounds/Yeti_eating.mp3';
+        this.eatingSound.src = './Sounds/Yeti_eating.mp3';
 
         this.gameOverSound = new Audio();
-        this.gameOverSound.src = '/Sounds/Game-over.mp3';
+        this.gameOverSound.src = './Sounds/Game-over.mp3';
     }
 
     start() {

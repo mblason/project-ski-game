@@ -3,7 +3,7 @@ class Snowboard {
         this.ctx = ctx;     
 
         this.img = new Image();
-        this.img.src = '/Images/Animated Obstacles/Sprite_Snowboarding.png';
+        this.img.src = './Images/Animated Obstacles/Sprite_Snowboarding.png';
         this.w = 40;
         this.h = 60;   
 

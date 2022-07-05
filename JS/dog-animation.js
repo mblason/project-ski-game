@@ -4,7 +4,7 @@ class Dog {
         this.game = game;
                  
         this.img = new Image();
-        this.img.src = '/Images/Animated Obstacles/Sprite_dog.png';
+        this.img.src = './Images/Animated Obstacles/Sprite_dog.png';
         this.w = 37;
         this.h = 30;  
         this.x = 0;   

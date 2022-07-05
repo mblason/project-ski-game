@@ -7,7 +7,7 @@ class Snowball {
         this.snowballShooted = false;
 
         this.img = new Image();
-        this.img.src = '/Images/snowball.png';
+        this.img.src = './Images/snowball.png';
 
         this.x = x;
         this.y = y;

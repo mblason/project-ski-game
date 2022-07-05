@@ -15,15 +15,15 @@ class Obstacle {
 
         this.types = { 
             // key: [url img, width, height, x, y]            
-            tree: ['/Images/Frequent Obstacles/Tree.png', 48, 60, this.randomX, this.randomY],
-            dryTree: ['/Images/Frequent Obstacles/Dry_tree.png', 40, 48, this.randomX, this.randomY],
-            cutTree: ['/Images/Frequent Obstacles/Cut_tree.png', 32, 24, this.randomX, this.randomY],
-            pine: ['/Images/Frequent Obstacles/Pine.png', 55, 106, this.randomX, this.randomY],
-            rock: ['/Images/Frequent Obstacles/Rock.png', 40, 22, this.randomX, this.randomY],
-            chairliftEmpty: ['/Images/Frequent Obstacles/Chairlift_empty.png', 50, 55, this.ctx.canvas.width * 0.10, this.maxY],
-            chairliftFull: ['/Images/Frequent Obstacles/Chairlift_full.png', 50, 57, this.ctx.canvas.width * 0.20, this.maxY - 100],
-            car: ['/Images/Not Frequent Obstacles/Car.png', 47, 108, this.ctx.canvas.width * 0.75, this.maxY],
-            rainbowRamp: ['/Images/Not Frequent Obstacles/Rainbow.png', 58, 19, this.randomX, this.randomY]                    
+            tree: ['./Images/Frequent Obstacles/Tree.png', 48, 60, this.randomX, this.randomY],
+            dryTree: ['./Images/Frequent Obstacles/Dry_tree.png', 40, 48, this.randomX, this.randomY],
+            cutTree: ['./Images/Frequent Obstacles/Cut_tree.png', 32, 24, this.randomX, this.randomY],
+            pine: ['./Images/Frequent Obstacles/Pine.png', 55, 106, this.randomX, this.randomY],
+            rock: ['./Images/Frequent Obstacles/Rock.png', 40, 22, this.randomX, this.randomY],
+            chairliftEmpty: ['./Images/Frequent Obstacles/Chairlift_empty.png', 50, 55, this.ctx.canvas.width * 0.10, this.maxY],
+            chairliftFull: ['./Images/Frequent Obstacles/Chairlift_full.png', 50, 57, this.ctx.canvas.width * 0.20, this.maxY - 100],
+            car: ['./Images/Not Frequent Obstacles/Car.png', 47, 108, this.ctx.canvas.width * 0.75, this.maxY],
+            rainbowRamp: ['./Images/Not Frequent Obstacles/Rainbow.png', 58, 19, this.randomX, this.randomY]                    
         }
 
         this.img = new Image();

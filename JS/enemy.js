@@ -23,19 +23,19 @@ class Enemy {
 
         //IMG YETI RUNNING 
         this.imgRunning = new Image();
-        this.imgRunning.src = '/Images/Enemy/Yeti_running.png';
+        this.imgRunning.src = './Images/Enemy/Yeti_running.png';
         this.imgRunning.frames = 8;
         this.imgRunning.frameIndex = this.left ? 0 : 4;
         
         //IMG YETI EATING PLAYER
         this.imgEating = new Image();
-        this.imgEating.src = '/Images/Enemy/Yeti_eating_player.png';
+        this.imgEating.src = './Images/Enemy/Yeti_eating_player.png';
         this.imgEating.frames = 12;
         this.imgEating.frameIndex = this.left ? 0 : 6; 
 
         //IMG YETI DEAD
         this.imgDead = new Image();
-        this.imgDead.src = '/Images/Home/RIP_yetis.png'; 
+        this.imgDead.src = './Images/Home/RIP_yetis.png'; 
         
         this.vy = -2;
         this.vx = this.left ? 2 : -2;

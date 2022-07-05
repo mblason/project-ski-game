@@ -10,7 +10,7 @@ class Player {
         this.y = this.ctx.canvas.height / 3;     
 
         this.img = new Image();
-        this.img.src = '/Images/Player/Player_moves.png';
+        this.img.src = './Images/Player/Player_moves.png';
         this.img.frames = 8;
         this.img.frameIndex = 0;
 

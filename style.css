@@ -418,7 +418,7 @@ button:hover {
 #instructions li {
     list-style: none;
     padding-left: 30px;
-    background-image: url('/Images/Home/Snowflake.png');
+    background-image: url('Images/Home/Snowflake.png');
     background-repeat: no-repeat;
     background-position: left;
     background-size: 18px;

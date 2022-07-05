@@ -14,9 +14,9 @@ class Background{
         
         this.snows = {
             // key: [url img, width, height, x, y]
-            snowLarge: ['/Images/Frequent Obstacles/Snow_large.png', 118, 67, this.randomX, this.randomY],
-            snowMedium: ['/Images/Frequent Obstacles/Snow_medium.png', 51, 48, this.randomX, this.randomY],  
-            snowSmall: ['/Images/Frequent Obstacles/Snow_small.png', 66, 44, this.randomX, this.randomY]            
+            snowLarge: ['./Images/Frequent Obstacles/Snow_large.png', 118, 67, this.randomX, this.randomY],
+            snowMedium: ['./Images/Frequent Obstacles/Snow_medium.png', 51, 48, this.randomX, this.randomY],  
+            snowSmall: ['./Images/Frequent Obstacles/Snow_small.png', 66, 44, this.randomX, this.randomY]            
         }
 
         this.img = new Image();
