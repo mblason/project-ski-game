@@ -34,10 +34,6 @@ button:hover {
     color:rgb(18, 18, 85);
 }
 
-#buttons-home-container button:hover{
-    color: rgb(18, 18, 85);
-}
-
 #game-over-container {
     position: absolute;
     z-index: 1;
@@ -369,7 +365,7 @@ button:hover {
 #buttons-home-container {
     position: absolute;
     z-index: 4;
-    bottom: 150px;
+    bottom: 12%;
     left: 34%;
 }
 
@@ -383,6 +379,10 @@ button:hover {
     color: black;
     font-size: 1.2rem;
     margin-left: 40px;
+}
+
+#buttons-home-container button:hover {
+    color: rgb(18, 18, 85);
 }
 
 #instructions-container {
@@ -411,8 +411,17 @@ button:hover {
 }
 
 #instructions ul {
-    margin-left: 80px;
+    margin-left: 40px;
     line-height: 2;
+}
+
+#instructions li {
+    list-style: none;
+    padding-left: 30px;
+    background-image: url('/Images/Home/Snowflake.png');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: 18px;
 }
 
 #instructions img {

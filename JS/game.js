@@ -29,7 +29,7 @@ class Game {
                 vyJump: -7,
                 vyRampJump: -9,
                 minTimeEnemy: 500,
-                maxTimeEnemy: 2000  
+                maxTimeEnemy: 1000  
             },
             { //SUMO 2 EN VELOCIDADES
                 vyDown: -7,
@@ -41,8 +41,8 @@ class Game {
                 vxRight: -6,
                 vyJump: -8,
                 vyRampJump: -10,
-                minTimeEnemy: 500,
-                maxTimeEnemy: 1000
+                minTimeEnemy: 400,
+                maxTimeEnemy: 600
             }
         ]
              
