@@ -1,9 +1,10 @@
 class Enemy {
     constructor(ctx, game, left){
         this.ctx = ctx;   
-        this.game = game;            
-        this.health = 1;
+        this.game = game;     
         this.left = left;
+
+        this.health = 1;        
         this.isDead = false;
   
         this.maxLeft = 100;
@@ -92,9 +93,6 @@ class Enemy {
     }
 
     move(){
-        // el yeti aparecer Random en diagonal desde el extremo inferior derecho o izquierdo 
-        // el yeti debe llegar hasta la posición del player 
-        //MOVER AL YETI
         this.y += this.vy 
         this.x += this.vx; 
 
