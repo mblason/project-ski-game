@@ -331,7 +331,15 @@ button:hover {
     background-color: whitesmoke;    
 }
 
-#home-background img {
+#img-home-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#img-home-container img {
     position: absolute;
     top: 20px;
     animation-duration: 5s;
@@ -356,6 +364,8 @@ button:hover {
 }
 
 #home-background small {
+    width: 100vw;
+    text-align: center;
     position: absolute;
     bottom: 15px;
     font-size: 0.7rem;
@@ -363,13 +373,23 @@ button:hover {
 }
 
 #buttons-home-container {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     z-index: 4;
     bottom: 12%;
-    left: 34%;
 }
 
-#buttons-home-container > button {
+#buttons-flex-container{
+    width: 30vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#buttons-flex-container > button {
     width: 150px;
     height: 60px;
     padding: 10px;
@@ -378,7 +398,6 @@ button:hover {
     background-color: whitesmoke;
     color: black;
     font-size: 1.2rem;
-    margin-left: 40px;
 }
 
 #buttons-home-container button:hover {
