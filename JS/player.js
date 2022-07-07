@@ -6,7 +6,7 @@ class Player {
         this.health = 4;
         this.invencible = false;
 
-        this.x = this.ctx.canvas.width / 2;
+        this.x = this.ctx.canvas.width * 0.48;
         this.y = this.ctx.canvas.height / 3;     
 
         this.img = new Image();

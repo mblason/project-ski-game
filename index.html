@@ -42,17 +42,18 @@
       </div>
     </div>
 
-    <div id="commands-container" class="invisible">
-      <img src="Images/Home/Commands.png" alt="commands" />
-      <br />
-      <br />
-      <button id="close-commands-btn" class="btn-with-sound">CLOSE</button>
+    <div id="commands-width-container">
+      <div id="commands-container" class="invisible">
+        <img src="Images/Home/Commands.png" alt="commands" />
+        <br />
+        <br />
+        <button id="close-commands-btn" class="btn-with-sound">CLOSE</button>
+      </div>
     </div>
-
-    <div id="countdown-container" class="">
+    
+    <div id="countdown-container">
         <p id="countdown">START LINE</p>
     </div>
-
 
     <div id="home-background">
       <div id="img-home-container">
@@ -89,64 +90,68 @@
       </div>
     </div>
 
-    <div id="choose-level-container" class="invisible">        
-        <div class="input-container">
-            <h2>ENTER YOUR NAME:</h2>            
-            <input id="input" type="text" required></input>
-        </div> 
-        <h2>CHOOSE THE DIFFICULTY:</h2>
-        <div class="level-btn-container">
-            <div>
-                <button id="easy-diff-btn" class="btn-with-sound">EASY</button>
-                <small>I’VE NEVER KILLED A YETI BEFORE</small>
-            </div>
-            <div>
-                <button id="normal-diff-btn" class="btn-with-sound">NORMAL</button>
-                <small>I USED TO KILL SOME YETIS</small>
-            </div>
-            <div>
-                <button id="hard-diff-btn" class="btn-with-sound">HARD</button>
-                <small>KILL YETIS = PIECE OF CAKE</small>
-            </div>
-        </div>
-    </div>
-
-    <div id="game-over-container" class="invisible">
-      <h2>GAME OVER</h2>
-      <div id="columns-score">
-        <div id="current-score">
-            <h3>YOUR SCORE:</h3>
-            <div>
-              <span class="final-yetis-killed"></span>
-              <span>YETIS KILLED</span>
-              <img src="Images/Home/RIP_yetis.png" />
-            </div>
-            <div>
-              <span class="final-distance"></span>
-              <span class="meters">m</span>
-              <span>DISTANCE TRAVELED</span>
-            </div>
-        </div>
-        <div id="best-score">     
-            <div id="name-user">
-                <div>           
-                <h3>BEST SCORE BY:</h3>
-                </div>            
-                <div class="span-name-input"></div>    
-            </div>          
+    <div id="choose-level-width-container">
+      <div id="choose-level-container"class="invisible">        
+          <div class="input-container">
+              <h2>ENTER YOUR NAME:</h2>            
+              <input id="input" type="text" required></input>
+          </div> 
+          <h2>CHOOSE THE DIFFICULTY:</h2>
+          <div class="level-btn-container">
               <div>
-                  <span class="best-yetis-killed"></span>
-                  <span>YETIS KILLED</span>
-                  <img src="Images/Home/RIP_yetis.png" />
+                  <button id="easy-diff-btn" class="btn-with-sound">EASY</button>
+                  <small>I’VE NEVER KILLED A YETI BEFORE</small>
               </div>
               <div>
-                  <span class="best-distance"></span>
-                  <span class="meters">m</span>
-                  <span>DISTANCE TRAVELED</span>
-              </div>     
-        </div>    
+                  <button id="normal-diff-btn" class="btn-with-sound">NORMAL</button>
+                  <small>I USED TO KILL SOME YETIS</small>
+              </div>
+              <div>
+                  <button id="hard-diff-btn" class="btn-with-sound">HARD</button>
+                  <small>KILL YETIS = PIECE OF CAKE</small>
+              </div>
+          </div>
       </div>
-      <button id="play-again-btn" class="btn-with-sound">PLAY AGAIN</button>
+    </div>
+
+    <div id="game-over-width-container">    
+      <div id="game-over-container" class="invisible">
+        <h2>GAME OVER</h2>
+        <div id="columns-score">
+          <div id="current-score">
+              <h3>YOUR SCORE:</h3>
+              <div>
+                <span class="final-yetis-killed"></span>
+                <span>YETIS KILLED</span>
+                <img src="Images/Home/RIP_yetis.png" />
+              </div>
+              <div>
+                <span class="final-distance"></span>
+                <span class="meters">m</span>
+                <span>DISTANCE TRAVELED</span>
+              </div>
+          </div>
+          <div id="best-score">     
+              <div id="name-user">
+                  <div>           
+                  <h3>BEST SCORE BY:</h3>
+                  </div>            
+                  <div class="span-name-input"></div>    
+              </div>          
+                <div>
+                    <span class="best-yetis-killed"></span>
+                    <span>YETIS KILLED</span>
+                    <img src="Images/Home/RIP_yetis.png" />
+                </div>
+                <div>
+                    <span class="best-distance"></span>
+                    <span class="meters">m</span>
+                    <span>DISTANCE TRAVELED</span>
+                </div>     
+          </div>    
+        </div>
+        <button id="play-again-btn" class="btn-with-sound">PLAY AGAIN</button>
+      </div>
     </div>
 
     <script src="JS/background-snow.js"></script>

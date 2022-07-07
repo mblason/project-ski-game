@@ -34,11 +34,17 @@ button:hover {
     color:rgb(18, 18, 85);
 }
 
+#game-over-width-container{
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #game-over-container {
     position: absolute;
     z-index: 1;
     top: 30%;
-    left: 30%;
     height: 350px;
     width: 500px;
     border: 2px solid black;
@@ -189,13 +195,19 @@ button:hover {
     margin-left: 5px;
 }
 
+#commands-width-container{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #commands-container {
     position: absolute;
     z-index: 2;
     height: 220px;
     width: 450px;
-    top: 10%;
-    left: 1.4%;
+    top: 40%;
     border: 2px solid black;
     border-radius: 3px;
     padding: 25px;
@@ -219,27 +231,35 @@ button:hover {
  }
 
 #countdown-container{
+    width: 100vw;
+    height: 50px;
     position: absolute;
-    width: 50px;
     top: 52.5%;
-    left: 42%;
-    color: white;
-    font-size: 1.5rem;
-    width: 263px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #countdown-container p { 
-    width: 263px;
+    width: 399px;
+    height: 70px;
     text-align: center;
-    font-size: 2rem;
+    color: white;
+    font-size: 2.2rem;
     font-weight: 800;
     padding-top: 6px;
 }
 
+#choose-level-width-container{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #choose-level-container{
     position: absolute;
-    top: 25%;
-    left: 25%;
     z-index: 4;
     height: 350px;
     width: 700px;
